@@ -1,0 +1,11 @@
+Booking Confirmation
+--------------------
+Service: {{service}}
+Date: {{date}}
+Time: {{time}}
+{{notesBlock}}
+
+We will contact you shortly to confirm the appointment.
+For support, email {{supportEmail}}.
+
+PhoThai Massage Samui — Thank you!

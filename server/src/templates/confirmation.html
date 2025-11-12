@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Booking Confirmation</title>
+    <style>
+      body { font-family: Arial, Helvetica, sans-serif; color: #0b0b0b; }
+      .wrap { max-width: 640px; margin: 0 auto; padding: 16px; background: #ffffff; }
+      .brand { color: #1f5f43; font-weight: 700; font-size: 18px; }
+      .box { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; background: #f9fafb; }
+      .label { color: #374151; font-weight: 600; }
+      .value { color: #0b0b0b; }
+      .footer { color: #6b7280; font-size: 12px; margin-top: 16px; }
+      a { color: #2f7a57; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="brand">PhoThai — Booking Confirmation</div>
+      <p>
+        Thank you for your booking request. We’ve received the following details:
+      </p>
+      <div class="box">
+        <div><span class="label">Service:</span> <span class="value">{{service}}</span></div>
+        <div><span class="label">Date:</span> <span class="value">{{date}}</span></div>
+        <div><span class="label">Time:</span> <span class="value">{{time}}</span></div>
+        {{notesBlock}}
+      </div>
+      <p>
+        We will contact you shortly to confirm the appointment. If you need support, please reply to this email or reach us at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.
+      </p>
+      <div class="footer">
+        © PhoThai Massage Samui — Thank you!
+      </div>
+    </div>
+  </body>
+  </html>

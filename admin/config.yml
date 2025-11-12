@@ -1,0 +1,17 @@
+backend:
+  name: git-gateway
+  branch: main # change if your default branch is different
+
+media_folder: "" # no images needed
+public_folder: ""
+
+collections:
+  - name: "services"
+    label: "Services"
+    folder: "src/services"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Service Name", name: "title", widget: "string"}
+      - {label: "60min Price (THB)", name: "price_60", widget: "number"}
+      - {label: "90min Price (THB)", name: "price_90", widget: "number"}
