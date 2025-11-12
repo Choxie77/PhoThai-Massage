@@ -8,5 +8,16 @@
   </head>
   <body>
     <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+<script>
+  if (window.location.hash.includes("confirmation_token") || 
+      window.location.hash.includes("recovery_token")) {
+    window.netlifyIdentity = window.netlifyIdentity || {};
+    window.netlifyIdentity.on("init", () => {
+      window.netlifyIdentity.on("confirmation", () => {
+        window.location.href = "/admin/";
+      });
+    });
+  }
+</script>
   </body>
 </html>
