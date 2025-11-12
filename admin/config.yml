@@ -1,9 +1,6 @@
 backend:
   name: git-gateway
-  branch: main # change if your default branch is different
-
-media_folder: "" # no images needed
-public_folder: ""
+  branch: main
 
 collections:
   - name: "services"
