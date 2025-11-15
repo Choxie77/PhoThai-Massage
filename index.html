@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PhoThai — Traditional Thai Massage Samui</title>
+<!-- Performance: preconnect to Google Fonts origins -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Load variable fonts with swap for fast rendering -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+      margin-top: 0;
+      margin-bottom: 20px; /* Add bottom margin to entire page */
+      padding: 0;
+    }
+    .no-padding {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{height:100%;}
+    body{min-height:100%;font-family:var(--font-body-stack); color:#0b0b0b;background:#f7f8f9; -webkit-font-smoothing:antialiased; font-optical-sizing:auto; text-rendering:optimizeLegibility}
+    a{color:inherit; text-decoration:none}
+
+    :root{
+        --card:#ffffff;
+        --muted:#6b7280;
+        --accent:#2f7a57;
+        --accent-2:#1f5f43;
+        --glass: rgba(255,255,255,0.92);
+        --overlay: rgba(4,8,10,0.62);
+        --radius:12px;
+        --shadow: 0 8px 30px rgba(7,10,12,0.14);
+        --icon:#2b6b50;
+        --max-width:1100px;
+        --wrap-pad:16px;
+
+        /* Typography system */
+        --font-display: "Fraunces", serif;
+        --font-body-stack: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, system-ui, sans-serif;
+        --font-accent: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, system-ui, sans-serif;
+        --baseline: 4px;
+
+        /* Responsive type scale */
+        --fs-900: clamp(2.25rem, 1.7rem + 2vw, 3rem); /* H1 */
+        --fs-800: clamp(1.85rem, 1.5rem + 1.2vw, 2.4rem); /* H2 */
+        --fs-700: clamp(1.5rem, 1.35rem + 0.6vw, 1.85rem); /* H3 */
+        --fs-600: 1.25rem; /* H4 */
+        --fs-500: 1.1rem; /* H5 */
+        --fs-400: 1rem; /* Body */
+        --fs-300: 0.92rem; /* Caption */
+        --fs-200: 0.85rem; /* UI small */
+
+        /* Line heights & spacing */
+        --lh-heading: 1.25;
+        --lh-body: 1.6;
+        --lh-caption: 1.4;
+        --ls-tight: -0.01em;
+        --ls-ui: 0.01em;
+        --fw-display: 700;
+        --fw-heading: 600;
+        --fw-body: 400;
+        --fw-ui: 500;
+    }
+
+    /* Global type resets and roles */
+    h1, h2, h3 { font-family: var(--font-display); font-weight: var(--fw-display); line-height: var(--lh-heading); letter-spacing: var(--ls-tight); }
+    h4, h5, h6 { font-family: var(--font-body-stack); font-weight: var(--fw-heading); line-height: var(--lh-heading); }
+    h1{font-size:var(--fs-900)}
+    h2{font-size:var(--fs-800)}
+    h3{font-size:var(--fs-700)}
+    h4{font-size:var(--fs-600)}
+    h5{font-size:var(--fs-500)}
+    h6{font-size:var(--fs-400)}
+    body, p { font-size: var(--fs-400); line-height: var(--lh-body); }
+    small, .caption { font-size: var(--fs-300); line-height: var(--lh-caption); color: var(--muted); }
+    .ui-text, .nav-link, .nav-cta, .btn-submit, .btn-email, label { font-family: var(--font-accent); font-weight: var(--fw-ui); letter-spacing: var(--ls-ui); }
+
+    /* Topbar (transparent) */
+    .topbar{
+        position:absolute;
+        top:12px;
+        left:0;
+        right:0;
+        z-index:40;
+        max-width:var(--max-width);
+        margin:0 auto;
+        padding:12px var(--wrap-pad);
+        display:flex;
+        align-items:center;
+        justify-content:space-between; /* keep logo and controls separated */
+        gap:12px;
+        background:transparent;
+        pointer-events:auto;
+        flex-wrap:wrap;
+        min-height:48px;
+    }
+    .logo-wrap{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 auto}
+    .logo-mark{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.12);flex:0 0 auto}
+    .site-title{
+        color:var(--glass);
+        font-weight:700;
+        font-size:0.98rem;
+        line-height:1.05;
+        min-width:0;
+        overflow-wrap:break-word;
+        word-break:break-word;
+        hyphens:auto;
+        white-space:normal;
+        margin-left:8px;
+        flex:1 1 auto;
+    }
+
+    /* ===== HEADER ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(31, 95, 67, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Premium header styling */
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(31, 95, 67, 0.9) 0%, rgba(47, 122, 87, 0.9) 100%);
+  z-index: -1;
+}
+
+.site-header.scrolled {
+  background: rgba(31, 95, 67, 0.98);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the left, nav will be pushed right */
+  height: 88px;
+  position: relative;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.6rem;
+  gap: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.logo:hover {
+  transform: translateY(-1px);
+}
+
+.logo-mark {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #1f5f43;
+  font-weight: 800;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-mark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.logo:hover .logo-mark::before {
+  transform: translateX(100%);
+}
+
+.logo:hover .logo-mark {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.site-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #fff 0%, #e8f5e8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Hamburger Menu Button */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 52px;
+  height: 52px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  padding: 14px;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.hamburger:focus-visible {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.3);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
+}
+
+.hamburger:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-1px);
+}
+
+.hamburger:active {
+  transform: translateY(0);
+}
+
+.hamburger-box {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+}
+
+.hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -1px;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  position: absolute;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+  width: 24px;
+  height: 2px;
+  background-color: #fff;
+  border-radius: 2px;
+  position: absolute;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-inner::before,
+.hamburger-inner::after {
+  content: '';
+  display: block;
+}
+
+.hamburger-inner::before {
+  top: -8px;
+}
+
+.hamburger-inner::after {
+  bottom: -8px;
+}
+
+/* Hamburger Animation when Active */
+.hamburger.is-active {
+  background: rgba(255,255,255,0.15);
+}
+
+.hamburger.is-active .hamburger-inner {
+  transform: rotate(45deg);
+  background: #fff;
+}
+
+.hamburger.is-active .hamburger-inner::before {
+  transform: rotate(90deg) translateX(-8px);
+  top: 0;
+}
+
+.hamburger.is-active .hamburger-inner::after {
+  transform: rotate(90deg) translateX(8px);
+  bottom: 0;
+  opacity: 0;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Push navigation to the right */
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 12px; /* Increased gap for premium spacing */
+}
+
+.nav-link {
+  color: rgba(255,255,255,0.9);
+  font-weight: 500;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  background: transparent;
+  border: 1px solid transparent;
+  margin: 0 2px;
+  font-weight: 600;
+}
+
+.nav-link:focus-visible {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.3);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
+}
+
+.nav-link:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(255,255,255,0.1);
+}
+
+.nav-link.active {
+  color: #fff;
+  font-weight: 600;
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.nav-link.active:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-1px);
+}
+
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(135deg, #fff 0%, #e8f5e8 100%);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(255,255,255,0.3);
+}
+
+.nav-cta {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  color: #1f5f43;
+  padding: 14px 32px;
+  border-radius: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+  margin-left: 24px;
+}
+
+.nav-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.nav-cta:focus-visible {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2), 0 0 0 3px rgba(255,255,255,0.3);
+}
+
+.nav-cta:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+}
+
+.nav-cta:hover::before {
+  left: 100%;
+}
+
+.nav-cta:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .header-inner {
+    padding: 0 20px;
+    height: 76px;
+    justify-content: space-between;
+  }
+  
+  .hamburger {
+    display: flex;
+  }
+  
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #1f5f43 0%, #2d7a5a 100%);
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    border-radius: 0 0 16px 16px;
+    margin-left: 0; /* Reset margin-left for mobile */
+  }
+  
+  .nav.is-active {
+    max-height: 480px;
+    opacity: 1;
+  }
+  
+  .nav-menu {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+    gap: 4px;
+  }
+  
+  .nav-link {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 0;
+    min-height: 56px;
+    font-size: 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    text-transform: none; /* Ensure no uppercase on mobile */
+  }
+  
+  .nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateX(4px);
+  }
+  
+  .nav-link.active {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.2);
+  }
+  
+  .nav-link.active::before {
+    left: 12px;
+    height: 24px;
+  }
+  
+  .nav-cta {
+    margin: 8px 20px 20px;
+    justify-content: center;
+    padding: 18px 24px;
+    border-radius: 16px;
+    font-size: 1.05rem;
+    min-height: 56px;
+  }
+  
+  .logo {
+    font-size: 1.4rem;
+  }
+  
+  .logo-mark {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .site-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .hamburger-inner,
+  .hamburger-inner::before,
+  .hamburger-inner::after,
+  .nav,
+  .nav-link,
+  .nav-cta,
+  .site-header,
+  .logo-mark,
+  .logo {
+    transition: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .nav-link:focus-visible,
+  .nav-cta:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .nav-link,
+  .nav-cta {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Professional animations and micro-interactions */
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.site-header {
+  animation: slideInDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
+.nav-link,
+.nav-cta {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+}
+
+.nav-link:nth-child(1) { animation-delay: 0.5s; }
+.nav-link:nth-child(2) { animation-delay: 0.6s; }
+.nav-link:nth-child(3) { animation-delay: 0.7s; }
+.nav-link:nth-child(4) { animation-delay: 0.8s; }
+.nav-cta { animation-delay: 0.9s; }
+
+/* Enhanced focus indicators for keyboard navigation */
+.nav-link:focus-visible,
+.nav-cta:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.8);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(31, 95, 67, 0.3), 0 0 0 6px rgba(255,255,255,0.2);
+}
+
+/* Professional gradient overlay for depth */
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== HERO ===== */
+.hero-wrap { 
+  margin-top: 0; /* Remove margin to reach header */
+  position: relative;
+  top: 0;
+  padding-top: 0; /* Ensure no top padding */
+}
+.hero-media.centered {
+  position: relative;
+  min-height: 80vh; /* Make it much taller */
+  height: 700px; /* Add explicit height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+  color: #fff;
+}
+.hero-media.centered::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Enhanced high-quality Thai massage hero image - optimized for web */
+  background-image: url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center 30%;
+  transform: scale(1.05);
+  filter: brightness(0.75) saturate(0.9);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(4,8,10,0.45), rgba(4,8,10,0.6));
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 760px;
+  padding: 0 16px;
+}
+.hero-content h1 {
+  font-size: clamp(1.8rem, 4.2vw, 2.8rem);
+  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.hero-content p {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 28px;
+}
+.hero-buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.hero-buttons .btn {
+  padding: 12px 22px;
+  border-radius: 40px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  transition: transform .1s, opacity .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-buttons .btn svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(47,122,87,0.25);
+}
+.btn-call {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+.btn-outline {
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #fff;
+}
+
+/* Enhanced WhatsApp hero button variant */
+.btn-whatsapp {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border: 2px solid #25D366;
+  box-shadow: 0 6px 18px rgba(12,32,18,0.15);
+  padding: 12px 24px;
+  border-radius: 40px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+.btn-whatsapp:hover {
+  background: rgba(37,211,102,0.15);
+  box-shadow: 0 8px 24px rgba(37,211,102,0.25);
+  transform: translateY(-2px);
+}
+.btn-whatsapp svg { display:block; width:18px; height:18px; }
+
+/* Enhanced navigation accessibility */
+.nav a:focus {
+  outline: 2px solid #25D366;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.nav a:focus-visible {
+  outline: 2px solid #25D366;
+  outline-offset: 2px;
+}
+
+/* Enhanced button accessibility */
+.hero-buttons .btn:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.hero-buttons .btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Skip to main content link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+.hero-buttons .btn:hover { opacity: .95; transform: translateY(-1px); }
+
+/* Responsive hero image optimization */
+@media (max-width: 768px) {
+  .hero-media.centered::before {
+    background-position: center 20%;
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-media.centered::before {
+    background-position: center 15%;
+    transform: scale(1.15);
+  }
+}
+
+/* Responsive hero image optimization */
+@media (max-width: 768px) {
+  .hero-media.centered::before {
+    background-position: center 20%;
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-media.centered::before {
+    background-position: center 15%;
+    transform: scale(1.15);
+  }
+}
+
+/* Mobile off-canvas nav (<= 600px) */
+@media (max-width: 600px) {
+  .header-inner {
+    padding: 0 16px;
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .hamburger {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+  }
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(78vw, 320px);
+    background: linear-gradient(135deg, #1f5f43 0%, #2d7a5a 100%);
+    box-shadow: -24px 0 48px rgba(0,0,0,0.35);
+    transform: translateX(100%);
+    will-change: transform;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.98;
+    border-radius: 0 0 0 12px;
+    z-index: 1000;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav.is-active { transform: translateX(0); }
+  .nav-menu {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+    gap: 6px;
+  }
+  .nav-link, .nav-cta {
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin: 0;
+    min-height: 48px;
+    font-size: 1rem;
+  }
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 900;
+  }
+  body.nav-open .menu-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .hero-content h1 { font-size: 1.7rem; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .nav, .menu-overlay, .hamburger, .nav-link, .nav-cta { transition: none !important; }
+}
+
+/* About / Therapists section moved out of hero (clean composition) */
+.about-therapists-section{
+    margin-top:0;
+    margin-bottom:20px; /* Add bottom margin for spacing */
+    display:block;          /* ✅ Allows full width */
+    width:100%;
+    padding:0;
+}
+.about-therapists-section .about-card{
+    width:100%;    
+    padding:18px;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    background:var(--card);
+    margin:0;
+}
+.about-therapists{
+    margin-top:18px;
+    display:block;          /* ✅ Allows full width */
+    width:100%;
+}
+.about-card{
+    width:100%;    
+    padding-left: 0px;
+    padding-right: 0px;         /* ✅ Forces it to span full container */
+}
+.about-card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)}
+.about-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.about-item{display:flex;gap:12px;align-items:flex-start}
+.about-item svg{flex:0 0 40px;color:var(--accent);width:40px;height:40px}
+
+/* container for main content */
+.container{max-width:var(--max-width);margin:26px auto;padding:0 var(--wrap-pad);}
+
+/* Services */
+.section{background:var(--card);padding:22px;border-radius:12px;box-shadow:0 8px 28px rgba(9,11,12,0.04);margin-bottom:20px}
+.section h2{color:var(--accent-2);margin-bottom:8px}
+.services-table{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:0;}
+thead th{background:#f6fbf7;color:var(--accent-2);text-align:left;padding:12px;border-radius:2px;font-weight:700}
+td{padding:12px;border-bottom:1px solid #f1f4f3;color:#0b0b0b}
+.price{font-weight:700;color:var(--accent-2);text-align:center}
+.bestseller{background:linear-gradient(90deg, rgba(47,122,87,0.06), rgba(47,122,87,0.02));font-weight:700}
+
+/* Booking form - consistent styling */
+.booking-section{background:var(--card);padding:24px 16px;margin:24px 0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.06);max-width:var(--max-width);margin-left:auto;margin-right:auto}
+#bookingForm{margin-top:20px}
+.booking-section h2{font-size:1.8rem;font-weight:700;color:var(--accent-2);margin-bottom:8px;text-align:center}
+.booking-section > p{text-align:center;color:var(--muted);font-size:1rem;margin-bottom:20px !important;line-height:1.5}
+.booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.booking-grid .full-width{grid-column:1 / -1}
+label{font-weight:600;font-size:0.9rem;color:#374151;margin-bottom:6px;display:block}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:0.95rem;background:#fff;transition:all 0.2s ease;box-sizing:border-box}
+input:hover,select:hover,textarea:hover{border-color:#9ca3af}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(47,122,87,0.1)}
+textarea{min-height:100px;resize:vertical}
+.form-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.btn-submit{background:var(--accent);color:#fff;padding:12px 20px;border-radius:8px;display:inline-flex;align-items:center;gap:8px;border:none;font-weight:600;font-size:0.95rem;letter-spacing:0.01em;box-shadow:0 2px 8px rgba(47,122,87,0.2);transition:all 0.2s ease;cursor:pointer}
+.btn-submit:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(47,122,87,0.3)}
+.btn-email{background:#fff;color:var(--accent);padding:12px 20px;border-radius:8px;border:1px solid #d1d5db;font-weight:600;font-size:0.95rem;letter-spacing:0.01em;transition:all 0.2s ease;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-family:var(--font-accent)}
+.btn-email:hover{background:#f9fafb;border-color:var(--accent)}
+ 
+ /* Invalid field state */
+ input.is-invalid, select.is-invalid, textarea.is-invalid{border-color:#dc2626;box-shadow:0 0 0 2px rgba(220,38,38,0.08)}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .booking-grid{grid-template-columns:1fr;gap:12px}
+  .booking-section{padding:20px 12px;margin:20px 0}
+  .form-actions{flex-direction:column;gap:8px}
+  .btn-submit,.btn-email{width:100%;justify-content:center}
+}
+
+/* Gallery */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.gallery img{width:100%;height:160px;object-fit:cover;border-radius:10px}
+
+/* Visit */
+.visit{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:16px}
+.visit-card{background:var(--card);padding:16px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.06);display:flex;align-items:center;gap:12px;transition:all 0.2s ease}
+.visit-card:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,0.08)}
+.visit-card svg{flex:0 0 20px;color:var(--icon);width:20px;height:20px;opacity:0.7}
+  .visit-card h3{margin:0 0 2px;font-size:0.95rem;color:var(--accent-2);font-weight:600}
+  .visit-card p{margin:0;color:var(--muted);font-size:0.85rem;line-height:1.3}
+  /* Reviews */
+  .reviews-section{padding:24px 12px;margin:24px 0}
+  .reviews-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+  .reviews-title{font-size:1.4rem;color:var(--accent-2);font-weight:700;margin:0}
+  .reviews-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .review-card{background:var(--card);padding:16px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.06);transition:transform .2s ease, box-shadow .2s ease}
+  .review-card:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,0.08)}
+  .reviewer{font-weight:600;color:#374151;font-size:0.95rem;margin-bottom:6px}
+  .stars{display:inline-flex;gap:2px;align-items:center}
+  .star{color:#f59e0b}
+  .review-text{color:var(--muted);font-size:0.9rem;line-height:1.5}
+  .btn-review{background:#fff;color:var(--accent);padding:10px 14px;border-radius:8px;border:1px solid #d1d5db;font-weight:600;font-size:0.9rem;letter-spacing:0.01em;transition:all 0.2s ease;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+  .btn-review:hover{background:#f9fafb;border-color:var(--accent)}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .review-skeleton{background:var(--card);padding:16px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+  .skeleton-line{height:12px;background:#e5e7eb;border-radius:6px;margin:8px 0;animation:pulse 1.2s ease-in-out infinite}
+  @keyframes pulse{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
+
+/* Toast */
+.toast{position:fixed;right:18px;bottom:18px;background:#111827;color:white;padding:12px 16px;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.4);display:none;z-index:9999}
+
+/* Responsive table -> stacked card style on small screens */
+@media (max-width:640px){
+  .services-table{overflow:visible}
+  table, thead, tbody, th, td, tr { display:block; width:100%; }
+  thead{display:none;}
+  tbody tr{margin-bottom:12px;border-radius:10px;padding:10px;background:#fff;border:1px solid #eef3ef}
+  td{display:flex;justify-content:space-between;padding:8px 10px;border-bottom:none;word-break:normal}
+  td:first-child{font-weight:700;flex:1 1 60%;padding-right:12px}
+  td[data-label]{flex:0 0 34%;text-align:right}
+  tr.bestseller td { display:block; text-align:left; padding:8px 10px }
+}
+
+/* -----------------------------------------------------------
+   Typography System — Implementation Notes
+   - Display/Headings: Fraunces (variable), mapped to h1–h3
+   - Body/UI: Inter (variable), used for body text, labels, buttons
+   - Special: caption, quote, lead utility classes below
+
+   Scale (clamp-based):
+   fs-900: H1 36–48px range
+   fs-800: H2 30–38px range
+   fs-700: H3 ~24–30px range
+   fs-600: H4 20px
+   fs-500: H5 17.6px
+   fs-400: Body 16px
+   fs-300: Caption ~14.7px
+   fs-200: UI small ~13.6px
+
+   Line heights: headings 1.25, body 1.6, caption 1.4
+   Letter-spacing: headings -0.01em, UI +0.01em
+
+   Fallback strategies:
+   - Fraunces -> serif stack
+   - Inter -> system-ui, Segoe UI, Roboto, Helvetica Neue, Arial
+   - Font loading uses preconnect + display:swap for performance
+   ----------------------------------------------------------- */
+
+.quote{font-family:var(--font-display);font-weight:var(--fw-heading);line-height:var(--lh-heading);font-size:var(--fs-600)}
+.lead{font-size:clamp(1.05rem, 1rem + 0.3vw, 1.2rem);line-height:var(--lh-body)}
+.caps{text-transform:uppercase;letter-spacing:0.08em;font-weight:var(--fw-ui);font-size:var(--fs-200)}
+
+/* Extra safety for very small screens (logo/text overlap) */
+@media (max-width: 500px) {
+  .topbar{padding:10px 10px; gap:10px; align-items:center;}
+  .logo-mark{width:36px;height:36px}
+  .site-title{font-size:0.92rem; max-width:calc(100vw - 96px); /* leave space for right-side controls */ }
+  .hero-inner{padding:18px 12px}
+  .hero-ctas .btn{font-size:0.95rem;padding:10px 12px}
+}
+
+/* Booking section responsive */
+@media (max-width: 640px) {
+  .booking-section{padding:32px 16px;margin:24px 0;border-radius:0}
+  .booking-section h2{font-size:1.8rem}
+  .booking-section > p{font-size:1rem;margin-bottom:24px !important}
+  #bookingForm{margin-top:24px}
+  .booking-grid{grid-template-columns:1fr}
+  .form-actions{flex-direction:column}
+  .btn-submit, .btn-email{width:100%;justify-content:center}
+}
+
+/* Small-screen pricing table fallback (keeps labels + values readable) */
+@media (max-width: 640px){
+  .services-table{overflow:visible}
+  table, thead, tbody, th, td, tr { display:block; width:100%; }
+  thead{display:none;}
+  tbody tr{margin-bottom:12px;border-radius:10px;padding:10px;background:#fff;border:1px solid #eef3ef}
+  td{display:flex;justify-content:space-between;padding:8px 10px;border-bottom:none;word-break:normal}
+  td:first-child{font-weight:700;flex:1 1 60%;padding-right:12px}
+  td[data-label]{flex:0 0 34%;text-align:right}
+}
+
+</style>
+</head>
+<body>
+
+<!-- Skip to main content link for screen readers -->
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- HEADER -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="#" class="logo" aria-label="PhoThai Massage - Home">
+     <img decoding="async" alt="PhoThai Massage logo" src="./logo4.png" width="28" height="36">
+        <rect x="2" y="2" width="20" height="20" rx="5" fill="#2f7a57"/>
+        <path d="M7 12c1.5-3 5-3 6.5 0" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>PhoThai Massage</span>
+    </a>
+    
+    <button class="hamburger" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navigation">
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+    
+    <nav class="nav" role="navigation" aria-label="Main navigation" id="navigation">
+      <ul class="nav-menu">
+        <li><a href="#services" class="nav-link" aria-label="View our services">Services</a></li>
+        <li><a href="#gallery" class="nav-link" aria-label="View our gallery and space">About</a></li>
+        <li><a href="#visit" class="nav-link" aria-label="Visit us">Visit</a></li>
+        <li><a href="#booking" class="nav-cta" aria-label="Book your appointment now">Book Now</a></li>
+      </ul>
+    </nav>
+    <div class="menu-overlay" aria-hidden="true"></div>
+  </div>
+</header>
+
+<!-- HERO -->
+    <section class="hero-wrap" role="region" aria-label="Hero section">
+      <div class="hero-media centered">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <h1>Experience Authentic Traditional Thai Massage on Koh Samui</h1>
+          <p>Reconnect body and mind through the art of Wat Pho-trained therapists — tradition meets tranquility.</p>
+
+          <div class="hero-buttons" role="navigation" aria-label="Call to action buttons">
+            <a class="btn btn-primary" href="#booking" title="Book appointment" aria-label="Book your massage appointment">Book Appointment</a>
+            <a class="btn btn-call" href="tel:+66982455446" title="Call us" aria-label="Call us at +66 98 245 5446">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+              </svg>
+              Call
+            </a>
+            <a class="btn btn-whatsapp" href="https://wa.me/66982455446?text=I%20would%20like%20to%20book" target="_blank" rel="noopener" title="Message on WhatsApp" aria-label="Message us on WhatsApp">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+              </svg>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<main class="container" id="main">
+    <!-- Services -->
+    <section class="section" id="services" aria-labelledby="servicesHeading">
+        <h2 id="servicesHeading">Services & Prices</h2>
+        <p style="color:var(--muted);margin-bottom:12px">Transparent pricing. Professional therapists. All prices in THB.</p>
+
+        <div class="services-table" role="table" aria-label="Services and prices">
+<table>
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th style="text-align:center">60 min</th>
+      <th style="text-align:center">90 min</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td data-label="Service">Traditional Thai Massage (WatPo style)</td>
+      <td data-label="60 min" class="price">350 ฿</td>
+      <td data-label="90 min" class="price">550 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Reflexology Foot Massage</td>
+      <td data-label="60 min" class="price">300 ฿</td>
+      <td data-label="90 min" class="price">450 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Natural Oil Massage (Soft)</td>
+      <td data-label="60 min" class="price">450 ฿</td>
+      <td data-label="90 min" class="price">700 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Thai with Herbal Oil Massage</td>
+      <td data-label="60 min" class="price">450 ฿</td>
+      <td data-label="90 min" class="price">700 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Neck & Shoulder (30 min)</td>
+      <td data-label="60 min" class="price">250 ฿</td>
+      <td data-label="90 min" class="price">—</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Head Massage (30 min)</td>
+      <td data-label="60 min" class="price">250 ฿</td>
+      <td data-label="90 min" class="price">—</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Office Syndrome / Migraine Relief</td>
+      <td data-label="60 min" class="price">500 ฿</td>
+      <td data-label="90 min" class="price">750 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Thai Trigger Point Massage</td>
+      <td data-label="60 min" class="price">500 ฿</td>
+      <td data-label="90 min" class="price">750 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Thai Herbal Compress Massage</td>
+      <td data-label="60 min" class="price">600 ฿</td>
+      <td data-label="90 min" class="price">900 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Aroma Body Massage</td>
+      <td data-label="60 min" class="price">600 ฿</td>
+      <td data-label="90 min" class="price">1,000 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Hot Oil Massage</td>
+      <td data-label="60 min" class="price">800 ฿</td>
+      <td data-label="90 min" class="price">1,200 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Coconut Oil Massage</td>
+      <td data-label="60 min" class="price">600 ฿</td>
+      <td data-label="90 min" class="price">900 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Aloe Vera Massage</td>
+      <td data-label="60 min" class="price">600 ฿</td>
+      <td data-label="90 min" class="price">900 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Anti-Stress & Muscle Relief</td>
+      <td data-label="60 min" class="price">800 ฿</td>
+      <td data-label="90 min" class="price">1,200 ฿</td>
+    </tr>
+
+    <tr>
+      <td data-label="Service">Deep Relaxation (CBD Oil)</td>
+      <td data-label="60 min" class="price">900 ฿</td>
+      <td data-label="90 min" class="price">1,400 ฿</td>
+    </tr>
+
+    <tr class="bestseller">
+      <td data-label="Service">
+        PhoThai Signature Massage 
+        <span style="background:var(--accent);color:#fff;padding:4px 8px;border-radius:999px;margin-left:8px;font-size:0.78rem">
+          BEST SELLER
+        </span>
+      </td>
+      <td data-label="Pricing" class="price" colspan="2" style="text-align:center">
+        Contact for bespoke package
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+        </div>
+    </section>
+
+    <!-- Booking -->
+    <section class="booking-section" id="booking" aria-labelledby="bookingHeading">
+        <h2 id="bookingHeading">Book Your Appointment</h2>
+        <p>Schedule your relaxing Thai massage session today</p>
+
+        <form id="bookingForm">
+            <div class="booking-grid">
+                <div>
+                    <label for="name">Name</label>
+                    <input id="name" name="name" required placeholder="Your name">
+                </div>
+                <div>
+                    <label for="phone">Phone</label>
+                    <input id="phone" name="phone" required placeholder="Phone number">
+                </div>
+                <div>
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div>
+                    <label for="time">Time</label>
+                    <input type="time" id="time" name="time" required min="10:00" max="22:00">
+                </div>
+                <div class="full-width">
+                    <label for="serviceSelect">Service</label>
+                    <select id="serviceSelect" name="service" required>
+                        <option value="">Select service</option>
+                        <option>Traditional Thai Massage (60)</option>
+                        <option>Natural Oil Massage (60)</option>
+                        <option>PhoThai Signature (90)</option>
+                    </select>
+                </div>
+                <div class="full-width">
+                    <label for="notes">Special Requests</label>
+                    <textarea id="notes" name="notes" placeholder="Any preferences or notes?"></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-submit" type="button" id="bookNowBtn" aria-label="Book now via email" aria-controls="formMsg">Book Now</button>
+                <button class="btn-email" type="button" id="whatsappBtn" aria-label="Open WhatsApp chat" aria-controls="formMsg">
+                  <span aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 6L0 24l6.2-1.6A12 12 0 0 0 12 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.21-3.48-8.52zM12 22a9.9 9.9 0 0 1-5.05-1.39l-.36-.21-3.59.93.96-3.5-.23-.37A9.9 9.9 0 0 1 2 12c0-5.52 4.48-10 10-10 2.67 0 5.18 1.04 7.07 2.93A9.98 9.98 0 0 1 22 12c0 5.52-4.48 10-10 10zm5.21-7.52c-.3-.17-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.3-.77 1.02-.94 1.23-.17.2-.35.23-.63.08-.3-.16-1.27-.46-2.41-1.47-.89-.76-1.47-1.7-1.64-1.98-.17-.3-.02-.46.12-.62.14-.16.3-.4.46-.61.15-.22.2-.37.31-.62.1-.26.05-.49-.02-.69-.08-.2-.62-1.49-.85-2.04-.22-.55-.45-.47-.63-.48-.17-.01-.38-.02-.59-.02-.23 0-.6.09-.92.44-.32.35-1.2 1.17-1.2 2.85s1.23 3.3 1.4 3.53c.17.23 2.41 3.71 5.86 5.11.82.35 1.46.56 1.96.73.82.27 1.56.23 2.15.14.66-.1 2.02-.83 2.31-1.63.28-.81.28-1.49.2-1.63-.09-.14-.31-.23-.64-.4z"></path>
+                    </svg>
+                  </span>
+                  WhatsApp
+                </button>
+            </div>
+
+            <div id="formMsg" role="status" aria-live="polite" style="margin-top:12px;display:none;padding:12px;border-radius:8px"></div>
+        </form>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section" id="gallery" aria-label="Gallery">
+        <h2>Our Space</h2>
+        <p style="color:var(--muted);margin-bottom:12px">Calm, minimal interiors. Real photos coming soon.</p>
+        <div class="gallery">
+            <img loading="lazy" alt="Massage room" src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=900&q=60">
+            <img loading="lazy" alt="Relaxing interior" src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=900&q=60">
+            <img loading="lazy" alt="Treatment setup" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=900&q=60">
+        </div>
+    </section>
+
+      <!-- About therapists moved below hero for better composition -->
+    <div class="about-therapists-section" id="about" aria-labelledby="aboutHeading">
+        <div class="about-card" id="aboutHeading">
+            <h3 style="margin:0;color:var(--accent-2)">About Our Therapists</h3>
+            <p style="color:var(--muted);margin-top:8px">Our team is trained in Wat Pho techniques and focuses on safe, effective treatments tailored to each guest.</p>
+
+            <div class="about-list" style="margin-top:12px">
+                <div class="about-item">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 8h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <div>
+                        <div style="font-weight:700">25+ years experience</div>
+                        <div style="color:var(--muted);font-size:0.95rem">Senior instructors from Wat Pho</div>
+                    </div>
+                </div>
+
+                <div class="about-item">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <div>
+                        <div style="font-weight:700">Therapies</div>
+                        <div style="color:var(--muted);font-size:0.95rem">Thai, Reflexology, Herbal Compress, Deep Tissue, Aroma</div>
+                    </div>
+                </div>
+
+                <div class="about-item">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <div>
+                        <div style="font-weight:700">Professional & Clean</div>
+                        <div style="color:var(--muted);font-size:0.95rem">Comfortable environment focused on results</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visit Us -->
+    <section class="section" id="visit" aria-labelledby="visitHeading">
+        <h2 id="visitHeading">Visit Us</h2>
+
+        <div class="visit">
+            <div class="visit-card">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor" style="color:var(--icon)"/>
+                    <circle cx="12" cy="9" r="2.2" fill="white"/>
+                </svg>
+                <div>
+                    <h3>Location</h3>
+                    <p>70/5 Tambon Bo Put, Ko Samui 84320</p>
+                </div>
+            </div>
+
+            <div class="visit-card">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 12 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.18 4.18 2 2 0 0 1 4 2h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--icon)"/>
+                </svg>
+                <div>
+                    <h3>Contact</h3>
+                    <p><a href="tel:+66982455446">+66 98 245 5446</a></p>
+                </div>
+            </div>
+
+            <div class="visit-card">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" style="color:var(--icon)"/>
+                    <path d="M12 7v5l3 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--icon)"/>
+                </svg>
+                <div>
+                    <h3>Hours</h3>
+                    <p>Daily 10:00–22:00</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:16px;border-radius:8px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06)">
+            <iframe aria-hidden="false" loading="lazy" style="width:100%;height:280px;border:0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3948.0927367944846!2d100.04076931527942!3d9.53767299309283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3054f8a5e8b4b5b5%3A0x0!2zOcKwMzInMTUuNyJOIDEwMMKwMDInMzYuNyJF!5e0!3m2!1sen!2sth!4v1635000000000!5m2!1sen!2sth"></iframe>
+        </div>
+    </section>
+    <section class="section reviews-section" id="reviews" aria-labelledby="reviewsTitle">
+        <h2 id="reviewsTitle" class="reviews-title">Google Reviews</h2>
+        <div class="reviews-list" id="reviewsList" role="list" aria-describedby="reviewsTitle"></div>
+        <div id="writeReviewWrap" aria-live="polite"></div>
+    </section>
+</main>
+
+<!-- small toast for confirmations -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+    // Hamburger Menu Functionality
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('.nav');
+    const navLinks = document.querySelectorAll('.nav-link, .nav-cta');
+    const siteHeader = document.querySelector('.site-header');
+    const overlay = document.querySelector('.menu-overlay');
+    let lastFocused = null;
+    
+    function getFocusableElements(container){
+        return container.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+    }
+
+    function trapFocus(e){
+        if (!nav.classList.contains('is-active')) return;
+        if (e.key !== 'Tab') return;
+        const focusables = Array.from(getFocusableElements(nav));
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
+    }
+
+    function toggleMenu() {
+        const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+        hamburger.setAttribute('aria-expanded', !isExpanded);
+        hamburger.classList.toggle('is-active');
+        nav.classList.toggle('is-active');
+        nav.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
+        document.body.classList.toggle('nav-open', !isExpanded);
+        
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = !isExpanded ? 'hidden' : '';
+        
+        // Add haptic feedback simulation for mobile
+        if (window.navigator.vibrate) {
+            window.navigator.vibrate(10);
+        }
+
+        // Focus management
+        if (!isExpanded) {
+            lastFocused = document.activeElement;
+            const firstLink = nav.querySelector('.nav-link, .nav-cta');
+            if (firstLink) firstLink.focus();
+            document.addEventListener('keydown', trapFocus);
+        } else {
+            document.removeEventListener('keydown', trapFocus);
+            if (lastFocused) { try { lastFocused.focus(); } catch(e){} }
+        }
+    }
+    
+    function closeMenu() {
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.classList.remove('is-active');
+        nav.classList.remove('is-active');
+        document.body.style.overflow = '';
+    }
+    
+    hamburger.addEventListener('click', toggleMenu);
+    
+    // Close menu when clicking on nav links
+    navLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!nav.contains(e.target) && !hamburger.contains(e.target) && nav.classList.contains('is-active')) {
+            closeMenu();
+        }
+    });
+
+    // Close on overlay click
+    if (overlay) {
+        overlay.addEventListener('click', closeMenu);
+    }
+    
+    // Close menu on window resize if above mobile breakpoint
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 600) {
+            closeMenu();
+        }
+    });
+    
+    // Handle Escape key to close menu
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && nav.classList.contains('is-active')) {
+            closeMenu();
+            hamburger.focus();
+        }
+    });
+    
+    // Enhanced scroll behavior with header effects
+    let lastScrollY = window.scrollY;
+    let scrollTimeout;
+    let ticking = false;
+    
+    function updateHeaderOnScroll() {
+        const currentScrollY = window.scrollY;
+        const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+        
+        // Add scrolled class for styling changes
+        if (currentScrollY > 20) {
+            siteHeader.classList.add('scrolled');
+        } else {
+            siteHeader.classList.remove('scrolled');
+        }
+        
+        // Hide header on scroll down, show on scroll up
+        if (currentScrollY > 100 && scrollDelta > 5) {
+            if (currentScrollY > lastScrollY) {
+                // Scrolling down
+                siteHeader.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                siteHeader.style.transform = 'translateY(0)';
+            }
+        } else if (currentScrollY <= 100) {
+            siteHeader.style.transform = 'translateY(0)';
+        }
+        
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+    
+    function onScroll() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateHeaderOnScroll);
+            ticking = true;
+        }
+        
+        // Clear existing timeout
+        clearTimeout(scrollTimeout);
+        
+        // Set timeout for scroll end
+        scrollTimeout = setTimeout(function() {
+            if (window.scrollY > 100) {
+                siteHeader.style.transform = 'translateY(0)';
+            }
+        }, 150);
+    }
+    
+    window.addEventListener('scroll', onScroll, { passive: true });
+    
+    // Initialize header state
+    updateHeaderOnScroll();
+
+    // Smooth scroll for internal links with active state management
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+        a.addEventListener('click', function(e){
+            var target = document.querySelector(this.getAttribute('href'));
+            if(target){
+                e.preventDefault();
+                target.scrollIntoView({behavior:'smooth',block:'start'});
+                setTimeout(function(){ target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); }, 400);
+                
+                // Update active state for navigation
+                updateActiveNav(this.getAttribute('href'));
+            }
+        });
+    });
+
+    // Active navigation state management
+    function updateActiveNav(activeId) {
+        document.querySelectorAll('.nav-link, .nav-cta').forEach(function(link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === activeId) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // Intersection Observer for automatic active state updates with smooth transitions
+    function setupIntersectionObserver() {
+        const sections = ['#services', '#gallery', '#visit', '#booking'];
+        const navLinks = {};
+        let currentActiveSection = null;
+        
+        sections.forEach(id => {
+            const element = document.querySelector(id);
+            const link = document.querySelector(`a[href="${id}"]`);
+            if (element && link) {
+                navLinks[id] = link;
+            }
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+                    const newActiveId = '#' + entry.target.id;
+                    
+                    // Only update if section actually changed
+                    if (currentActiveSection !== newActiveId) {
+                        // Add fade out to current active
+                        if (currentActiveSection) {
+                            const currentLink = document.querySelector('.nav-link[href="' + currentActiveSection + '"], .nav-cta[href="' + currentActiveSection + '"]');
+                            if (currentLink) {
+                                currentLink.style.transition = 'all 0.3s ease';
+                                currentLink.classList.remove('active');
+                            }
+                        }
+                        
+                        // Add fade in to new active with slight delay
+                        setTimeout(function() {
+                            updateActiveNav(newActiveId);
+                            currentActiveSection = newActiveId;
+                            
+                            // Add entrance animation to new active link
+                            const newLink = document.querySelector('.nav-link[href="' + newActiveId + '"], .nav-cta[href="' + newActiveId + '"]');
+                            if (newLink) {
+                                newLink.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                            }
+                        }, 50);
+                    }
+                }
+            });
+        }, {
+            threshold: 0.3,
+            rootMargin: '-100px 0px -50% 0px'
+        });
+
+        Object.keys(navLinks).forEach(id => {
+            const element = document.querySelector(id);
+            if (element) observer.observe(element);
+        });
+    }
+
+    // Initialize intersection observer after DOM loads
+    if ('IntersectionObserver' in window) {
+        document.addEventListener('DOMContentLoaded', setupIntersectionObserver);
+    }
+
+    // Respect reduced motion preferences for type and scroll behaviors
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.style.setProperty('scroll-behavior', 'auto');
+    }
+
+    // Toast helper
+    var toast = document.getElementById('toast');
+    function showToast(msg, timeout){
+        toast.textContent = msg; toast.style.display = 'block'; toast.style.opacity = '1';
+        if(timeout !== 0){ setTimeout(hideToast, timeout || 3000); }
+    }
+    function hideToast(){ toast.style.opacity = '0'; setTimeout(function(){ toast.style.display = 'none'; },300); }
+
+    // Booking form actions: validate, email, and WhatsApp
+    var form = document.getElementById('bookingForm');
+    var bookBtn = document.getElementById('bookNowBtn');
+    var waBtn = document.getElementById('whatsappBtn');
+    var msgBox = document.getElementById('formMsg');
+
+    function getFormData(){
+        return {
+            name: (form.querySelector('#name') || {}).value?.trim() || '',
+            phone: (form.querySelector('#phone') || {}).value?.trim() || '',
+            service: (form.querySelector('#serviceSelect') || {}).value || '',
+            date: (form.querySelector('#date') || {}).value || '',
+            time: (form.querySelector('#time') || {}).value || '',
+            notes: (form.querySelector('#notes') || {}).value?.trim() || ''
+        };
+    }
+
+    function clearInvalid(){
+        form.querySelectorAll('.is-invalid').forEach(function(el){ el.classList.remove('is-invalid'); el.removeAttribute('aria-invalid'); });
+    }
+
+    function validate(data){
+        clearInvalid();
+        var errors = [];
+        function markInvalid(sel){ var el = form.querySelector(sel); if(el){ el.classList.add('is-invalid'); el.setAttribute('aria-invalid','true'); } }
+        if(!data.name){ errors.push('Name is required'); markInvalid('#name'); }
+        if(!data.phone){ errors.push('Phone is required'); markInvalid('#phone'); }
+        if(!data.service){ errors.push('Service is required'); markInvalid('#serviceSelect'); }
+        if(!data.date){ errors.push('Date is required'); markInvalid('#date'); }
+        if(!data.time){ errors.push('Time is required'); markInvalid('#time'); }
+        return errors;
+    }
+
+    function formatEmailBody(data){
+        var lines = [
+            'New Booking Request',
+            '---------------------',
+            'Name: ' + data.name,
+            'Phone: ' + data.phone,
+            'Service: ' + data.service,
+            'Date: ' + data.date,
+            'Time: ' + data.time,
+            data.notes ? ('Notes: ' + data.notes) : ''
+        ].filter(Boolean);
+        return encodeURIComponent(lines.join('\n'));
+    }
+
+    function showMessage(type, text){
+        msgBox.style.display = 'block';
+        if(type === 'error'){ msgBox.style.background = '#fff4f4'; msgBox.style.color = '#6b1c1c'; }
+        else { msgBox.style.background = '#f0fff4'; msgBox.style.color = '#0b6b2f'; }
+        msgBox.textContent = text;
+    }
+
+    function setLoading(btn, loading){
+        if(!btn) return;
+        btn.disabled = !!loading;
+        btn.setAttribute('aria-busy', loading ? 'true' : 'false');
+        btn.dataset.originalText = btn.dataset.originalText || btn.textContent;
+        btn.textContent = loading ? 'Sending…' : btn.dataset.originalText;
+    }
+
+    // Backend email via Gmail (Google Apps Script)
+    // 1) Create a Web App in Google Apps Script and deploy with access "Anyone"
+    // 2) Paste the web app URL below into GMAIL_ENDPOINT
+    // 3) The script should send email using GmailApp; example provided in documentation
+    // Backend SMTP service endpoint (Node/Express on localhost)
+    var EMAIL_ENDPOINT = ''; // Primary endpoint disabled
+    var FALLBACK_GMAIL_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzrWfcFY8UbLKZVEfY77F8tl8SblVgVV0yT_c3qf_P7fr-HucjBAB669PgtqaB2462e/exec';
+    var CONFIRMATION_RECIPIENT = 'HHthaihouse@gmail.com';
+    var FROM_ADDRESS = 'HHthaihouse@gmail.com'; // owner email used as replyTo/backend from
+    var lastEmailAttemptTs = 0;
+    // Google Places Reviews config (set API key and Place ID)
+    var GOOGLE_PLACES_API_KEY = '';
+    var GOOGLE_PLACE_ID = '';
+
+    function logEmailAttempt(status, details){
+        try{
+            var logs = JSON.parse(localStorage.getItem('emailLogs') || '[]');
+            logs.push({ ts: new Date().toISOString(), status: status, details: details });
+            // keep last 50
+            localStorage.setItem('emailLogs', JSON.stringify(logs.slice(-50)));
+        }catch(e){ console.warn('Email log error', e); }
+    }
+
+    async function sendEmailViaBackend(data){
+        if(!EMAIL_ENDPOINT || EMAIL_ENDPOINT.indexOf('http') !== 0){
+            showMessage('error', 'Email service is not configured. Please contact support.');
+            return;
+        }
+        // Simple rate limiting to prevent abuse
+        var now = Date.now();
+        if((now - lastEmailAttemptTs) < 15000){
+            showMessage('error', 'Please wait a moment before sending again.');
+            return;
+        }
+        lastEmailAttemptTs = now;
+        try {
+            const payload = {
+                name: data.name,
+                phone: data.phone,
+                service: data.service,
+                date: data.date,
+                time: data.time,
+                notes: data.notes,
+                subject: 'Booking Confirmation',
+                confirmationEmail: CONFIRMATION_RECIPIENT,
+                sendConfirmation: true,
+                replyTo: FROM_ADDRESS
+            };
+            const res = await fetch(EMAIL_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            let json;
+            if(!res.ok){
+                // Try to read response details for better UX
+                try { json = await res.json(); } catch(_) { json = null; }
+                logEmailAttempt('failure', { status: res.status, detail: json && (json.detail || json.error) });
+
+                // Attempt fallback to Gmail Apps Script if configured
+                if (FALLBACK_GMAIL_ENDPOINT && FALLBACK_GMAIL_ENDPOINT.indexOf('http') === 0) {
+                    try {
+                        const res2 = await fetch(FALLBACK_GMAIL_ENDPOINT, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const json2 = await res2.json().catch(function(){ return { ok:false }; });
+                        if (res2.ok && json2 && json2.ok) {
+                            showMessage('success', 'Your booking request was sent via email (fallback). We will contact you soon.');
+                            showToast('Email sent (fallback)');
+                            logEmailAttempt('success', { subject: payload.subject, to: payload.confirmationEmail, via: 'fallback' });
+                            form.reset();
+                            return; // success via fallback
+                        }
+                    } catch (_) { /* ignore fallback error */ }
+                }
+
+                throw new Error('Request failed: ' + res.status + (json && json.detail ? (' — ' + json.detail) : ''));
+            } else {
+                json = await res.json().catch(function(){ return { ok:true }; });
+            }
+            if(json && json.ok){
+                showMessage('success', 'Your booking request was sent via email. We will contact you soon.');
+                showToast('Email sent');
+                logEmailAttempt('success', { subject: payload.subject, to: payload.confirmationEmail });
+                form.reset();
+            } else {
+                logEmailAttempt('failure', { error: 'service error' });
+                throw new Error('Email service error');
+            }
+        } catch(err){
+            var errStr = String(err || '');
+            logEmailAttempt('failure', { error: errStr });
+            var msg = 'We could not send your email automatically. Please try again later or use WhatsApp.';
+            if(errStr.indexOf('Request failed') === 0){
+                msg = errStr;
+            } else if (errStr.toLowerCase().indexOf('failed to fetch') !== -1 || errStr.toLowerCase().indexOf('network') !== -1) {
+                msg = 'Network error: email service not reachable. Ensure backend at ' + EMAIL_ENDPOINT + ' is running or set FALLBACK_GMAIL_ENDPOINT.';
+            }
+
+            // Attempt fallback on network errors (or any error) if configured
+            if (FALLBACK_GMAIL_ENDPOINT && FALLBACK_GMAIL_ENDPOINT.indexOf('http') === 0) {
+                try {
+                    const payload = {
+                        name: data.name,
+                        phone: data.phone,
+                        service: data.service,
+                        date: data.date,
+                        time: data.time,
+                        notes: data.notes,
+                        subject: 'Booking Confirmation',
+                        confirmationEmail: CONFIRMATION_RECIPIENT,
+                        sendConfirmation: true,
+                        replyTo: FROM_ADDRESS
+                    };
+                    const res2 = await fetch(FALLBACK_GMAIL_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const json2 = await res2.json().catch(function(){ return { ok:false }; });
+                    if (res2.ok && json2 && json2.ok) {
+                        showMessage('success', 'Your booking request was sent via email (fallback). We will contact you soon.');
+                        showToast('Email sent (fallback)');
+                        logEmailAttempt('success', { subject: payload.subject, to: payload.confirmationEmail, via: 'fallback' });
+                        form.reset();
+                        return; // success via fallback
+                    }
+                } catch (_) { /* ignore fallback error */ }
+            }
+
+            showMessage('error', msg);
+        }
+    }
+    // Reviews utilities
+    function loadGoogleMapsScript(){
+        return new Promise(function(resolve, reject){
+            if(window.google && window.google.maps && window.google.maps.places){ return resolve(); }
+            if(!GOOGLE_PLACES_API_KEY){ return reject(new Error('Google Places API key is missing.')); }
+            var s = document.createElement('script');
+            s.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_PLACES_API_KEY + '&libraries=places';
+            s.async = true; s.defer = true;
+            s.onload = function(){ resolve(); };
+            s.onerror = function(){ reject(new Error('Failed to load Google Maps JS')); };
+            document.head.appendChild(s);
+        });
+    }
+    function renderStarRating(rating){
+        var full = Math.floor(rating || 0);
+        var half = (rating - full) >= 0.5;
+        var stars = '';
+        for(var i=0;i<5;i++){
+            var icon = (i < full) ? '★' : (half && i===full ? '★' : '☆');
+            stars += '<span class="star" aria-hidden="true">' + icon + '</span>';
+        }
+        return '<span class="sr-only">Rated ' + (rating||0) + ' out of 5</span><span class="stars" aria-label="Rating ' + (rating||0) + ' out of 5">' + stars + '</span>';
+    }
+    function truncate(text, max){
+        text = String(text||'').trim();
+        return text.length > max ? (text.slice(0, max-1) + '…') : text;
+    }
+    function renderReviews(reviewsData){
+        var list = document.getElementById('reviewsList');
+        if(!list) return;
+        list.innerHTML = '';
+        var reviews = (reviewsData && reviewsData.reviews) || [];
+        if(!reviews.length){
+            list.innerHTML = '<p class="review-text" style="grid-column:1/-1">No reviews available yet.</p>';
+            return;
+        }
+        reviews.slice(0,6).forEach(function(r){
+            var card = document.createElement('div');
+            card.className = 'review-card';
+            card.setAttribute('role','listitem');
+            card.innerHTML = '<div class="reviewer">' + (r.author_name||'Anonymous') + '</div>' +
+                             renderStarRating(r.rating || 5) +
+                             '<div class="review-text" style="margin-top:8px">' + truncate(r.text || r.original_text || '', 220) + '</div>';
+            list.appendChild(card);
+        });
+        var btnWrap = document.getElementById('writeReviewWrap');
+        if(btnWrap && reviewsData.url){
+            var a = document.createElement('a');
+            a.href = reviewsData.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+            a.className = 'btn-review'; a.textContent = 'Write a Review';
+            btnWrap.innerHTML = ''; btnWrap.appendChild(a);
+        }
+    }
+    function cacheReviews(data){
+        try{ localStorage.setItem('googleReviewsCache', JSON.stringify({ ts: Date.now(), data: data })); }catch(_){ }
+    }
+    function getCachedReviews(){
+        try{
+            var raw = localStorage.getItem('googleReviewsCache');
+            if(!raw) return null;
+            var obj = JSON.parse(raw);
+            var ttl = 1000 * 60 * 60 * 6; // 6 hours
+            if((Date.now() - obj.ts) < ttl){ return obj.data; }
+        }catch(_){ }
+        return null;
+    }
+    async function loadReviews(){
+        var cached = getCachedReviews();
+        if(cached){ renderReviews(cached); return; }
+        if(!GOOGLE_PLACE_ID){ renderReviews({ reviews: [] }); return; }
+        try{
+            await loadGoogleMapsScript();
+            var svc = new google.maps.places.PlacesService(document.createElement('div'));
+            svc.getDetails({ placeId: GOOGLE_PLACE_ID, fields: ['reviews','url','rating','user_ratings_total','name'] }, function(place, status){
+                if(status === google.maps.places.PlacesServiceStatus.OK){
+                    var data = { reviews: place.reviews || [], url: place.url || '' };
+                    cacheReviews(data);
+                    renderReviews(data);
+                } else {
+                    renderReviews({ reviews: [] });
+                }
+            });
+        }catch(_){ renderReviews({ reviews: [] }); }
+    }
+
+    function triggerWhatsApp(data){
+        var phone = '66982455446'; // company number without + or spaces
+        var text = 'Hello, I would like to book ' + (data.service||'a massage') + ' on ' + (data.date||'[date]') + ' at ' + (data.time||'[time]') + '. Name: ' + (data.name||'[name]') + ', Phone: ' + (data.phone||'[phone]');
+        var url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(text);
+        window.open(url, '_blank');
+        showToast('Opening WhatsApp…');
+    }
+
+    if(form){
+        if(bookBtn){
+            bookBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                msgBox.style.display = 'none';
+                var data = getFormData();
+                var errors = validate(data);
+                if(errors.length){
+                    showMessage('error', 'Please complete all required fields: ' + errors.join(', '));
+                    return;
+                }
+                setLoading(bookBtn, true);
+                (async function(){
+                    try { await sendEmailViaBackend(data); }
+                    finally { setLoading(bookBtn, false); }
+                })();
+            });
+        }
+        if(waBtn){
+            waBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                msgBox.style.display = 'none';
+                var data = getFormData();
+                triggerWhatsApp(data);
+            });
+        }
+    }
+
+    // Lazy load reviews when the section enters viewport
+    (function(){
+        var section = document.getElementById('reviews');
+        var list = document.getElementById('reviewsList');
+        if(section && list){
+            // skeletons
+            list.innerHTML = '';
+            for(var i=0;i<3;i++){
+                var sk = document.createElement('div');
+                sk.className = 'review-skeleton';
+                sk.innerHTML = '<div class="skeleton-line" style="width:40%"></div>' +
+                               '<div class="skeleton-line" style="width:70%"></div>' +
+                               '<div class="skeleton-line" style="width:90%"></div>';
+                list.appendChild(sk);
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(en){
+                    if(en.isIntersecting){ loadReviews(); io.disconnect(); }
+                });
+            }, { rootMargin: '100px' });
+            io.observe(section);
+        }
+    })();
+
+    // Accessibility: focus outlines for keyboard users only
+    (function(){
+        var mouseDown = false;
+        window.addEventListener('mousedown', function(){ mouseDown = true; document.documentElement.classList.add('using-mouse'); });
+        window.addEventListener('keydown', function(e){ if(e.key === 'Tab'){ mouseDown = false; document.documentElement.classList.remove('using-mouse'); } });
+    })();
+})();
+</script>
+</body>
+</html>
