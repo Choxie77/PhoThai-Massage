@@ -1787,6 +1787,8 @@ async function sendEmailViaBackend(data){
         }
     }
 }
+		// Reviews utilities
+		function loadGoogleMapsScript(){
 			return new Promise(function(resolve, reject){
 				if(window.google && window.google.maps && window.google.maps.places){ return resolve(); }
 				if(!GOOGLE_PLACES_API_KEY){ return reject(new Error('Google Places API key is missing.')); }
