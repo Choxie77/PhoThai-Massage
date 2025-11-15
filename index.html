@@ -1732,12 +1732,60 @@ textarea{min-height:100px;resize:vertical}
         }catch(e){ console.warn('Email log error', e); }
     }
 
-    async function sendEmailViaBackend(data){
-        if(!EMAIL_ENDPOINT || EMAIL_ENDPOINT.indexOf('http') !== 0){
-            showMessage('error', 'Email service is not configured. Please contact support.');
-            return;
+		async function sendEmailViaBackend(data){
+			// If primary endpoint is not configured, try fallback directly
+			if(!EMAIL_ENDPOINT || EMAIL_ENDPOINT.indexOf('http') !== 0){
+				if (FALLBACK_GMAIL_ENDPOINT && FALLBACK_GMAIL_ENDPOINT.indexOf('http') === 0) {
+					// Use fallback directly
+					return await sendViaFallback(data);
+				} else {
+					showMessage('error', 'Email service is not configured. Please contact support.');
+					return;
+				}
+			}        // Simple rate limiting to prevent abuse
+			async function sendViaFallback(data){
+    var now = Date.now();
+    if((now - lastEmailAttemptTs) < 15000){
+        showMessage('error', 'Please wait a moment before sending again.');
+        return;
+    }
+    lastEmailAttemptTs = now;
+    
+    try {
+        const payload = {
+            name: data.name,
+            phone: data.phone,
+            service: data.service,
+            date: data.date,
+            time: data.time,
+            notes: data.notes,
+            subject: 'Booking Confirmation - PhoThai Massage',
+            confirmationEmail: CONFIRMATION_RECIPIENT,
+            sendConfirmation: true,
+            replyTo: FROM_ADDRESS
+        };
+        
+        const res = await fetch(FALLBACK_GMAIL_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        const json = await res.json().catch(function(){ return { ok:false }; });
+        
+        if (res.ok && json && json.ok) {
+            showMessage('success', 'Your booking request was sent successfully. We will contact you soon!');
+            showToast('Email sent!');
+            logEmailAttempt('success', { subject: payload.subject, to: payload.confirmationEmail });
+            form.reset();
+        } else {
+            throw new Error('Failed to send email');
         }
-        // Simple rate limiting to prevent abuse
+    } catch(err){
+        logEmailAttempt('failure', { error: String(err) });
+        showMessage('error', 'Could not send email. Please use WhatsApp or call us directly.');
+    }
+}
         var now = Date.now();
         if((now - lastEmailAttemptTs) < 15000){
             showMessage('error', 'Please wait a moment before sending again.');
