@@ -1715,7 +1715,7 @@
 		// 3) The script should send email using GmailApp; example provided in documentation
 		// Backend SMTP service endpoint (Node/Express on localhost)
 		var EMAIL_ENDPOINT = ''; // Primary endpoint disabled
-		var FALLBACK_GMAIL_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw1cLPXGLH-cqU-5AHmolfBIhA_BokJUdCTbmS4C4EUITqx_uybkvJP_ltsyHS41hNP/exec';
+		var FALLBACK_GMAIL_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyxEVr_zKGU9lhEvk9suiT1BeWvqf8GhYC3a_tNPApMHksY2QZ2UJay5iA4xTDvA4ZY/exec';
 		var CONFIRMATION_RECIPIENT = 'HHthaihouse@gmail.com';
 		var FROM_ADDRESS = 'HHthaihouse@gmail.com'; // owner email used as replyTo/backend from
 		var lastEmailAttemptTs = 0;
@@ -1769,11 +1769,12 @@ async function sendViaFallback(data){
             form.reset();
         } else {
             throw new Error('Failed to send email');
-        }
-    } catch(err){
-        logEmailAttempt('failure', { error: String(err) });
-        showMessage('error', 'Could not send email. Please use WhatsApp or call us directly.');
-    }
+				}
+		}catch(err){
+			console.error('Email fail:',err);        // <- NEW
+			logEmailAttempt('failure',{error:err+''});
+			showMessage('error','Could not send email. Please use WhatsApp.');
+		}
 }
 
 async function sendEmailViaBackend(data){
