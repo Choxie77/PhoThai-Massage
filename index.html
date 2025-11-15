@@ -1790,12 +1790,18 @@ async function sendEmailViaBackend(data){
 		// Reviews utilities
 		function loadGoogleMapsScript(){
 			return new Promise(function(resolve, reject){
-				if(window.google && window.google.maps && window.google.maps.places){ return resolve(); }
-				if(!GOOGLE_PLACES_API_KEY){ return reject(new Error('Google Places API key is missing.')); }
+				if(window.google && window.google.maps && window.google.maps.places){
+					return resolve();
+				}
+				if(!GOOGLE_PLACES_API_KEY){
+					return reject(new Error('Google Places API key is missing.'));
+				}
 				var s = document.createElement('script');
-				s.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_PLACES_API_KEY + '&libraries=places';
-				s.async = true; s.defer = true;
-				s.onload = function(){ resolve(); };
+				s.src = 'https://maps.googleapis.com/maps/api/js?key=' +
+						GOOGLE_PLACES_API_KEY + '&libraries=places';
+				s.async = true;
+				s.defer = true;
+				s.onload  = resolve;
 				s.onerror = function(){ reject(new Error('Failed to load Google Maps JS')); };
 				document.head.appendChild(s);
 			});
