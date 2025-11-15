@@ -1249,53 +1249,38 @@
 			<h2 id="bookingHeading">Book Your Appointment</h2>
 			<p>Schedule your relaxing Thai massage session today</p>
 
-			<form id="bookingForm">
-				<div class="booking-grid">
-					<div>
-						<label for="name">Name</label>
-						<input id="name" name="name" required placeholder="Your name">
-					</div>
-					<div>
-						<label for="phone">Phone</label>
-						<input id="phone" name="phone" required placeholder="Phone number">
-					</div>
-					<div>
-						<label for="date">Date</label>
-						<input type="date" id="date" name="date" required>
-					</div>
-					<div>
-						<label for="time">Time</label>
-						<input type="time" id="time" name="time" required min="10:00" max="22:00">
-					</div>
-					<div class="full-width">
-						<label for="serviceSelect">Service</label>
-						<select id="serviceSelect" name="service" required>
-							<option value="">Select service</option>
-							<option>Traditional Thai Massage (60)</option>
-							<option>Natural Oil Massage (60)</option>
-							<option>PhoThai Signature (90)</option>
-						</select>
-					</div>
-					<div class="full-width">
-						<label for="notes">Special Requests</label>
-						<textarea id="notes" name="notes" placeholder="Any preferences or notes?"></textarea>
-					</div>
-				</div>
+<form id="bookingForm"
+      action="https://script.google.com/macros/s/AKfycbYOUR_NEW/exec"
+      method="POST"
+      target="hiddenIframe">
+  <div class="booking-grid">
+    <div><label for="name">Name</label><input id="name" name="name" required placeholder="Your name"></div>
+    <div><label for="phone">Phone</label><input id="phone" name="phone" required placeholder="Phone number"></div>
+    <div><label for="date">Date</label><input type="date" name="date" required></div>
+    <div><label for="time">Time</label><input type="time" name="time" required min="10:00" max="22:00"></div>
+    <div class="full-width">
+      <label for="serviceSelect">Service</label>
+      <select name="service" required>
+        <option value="">Select service</option>
+        <option>Traditional Thai Massage (60)</option>
+        <option>Natural Oil Massage (60)</option>
+        <option>PhoThai Signature (90)</option>
+      </select>
+    </div>
+    <div class="full-width">
+      <label for="notes">Special Requests</label>
+      <textarea name="notes" placeholder="Any preferences or notes?"></textarea>
+    </div>
+  </div>
 
-				<div class="form-actions">
-					<button class="btn-submit" type="button" id="bookNowBtn" aria-label="Book now via email" aria-controls="formMsg">Book Now</button>
-					<button class="btn-email" type="button" id="whatsappBtn" aria-label="Open WhatsApp chat" aria-controls="formMsg">
-					  <span aria-hidden="true">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-						  <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 6L0 24l6.2-1.6A12 12 0 0 0 12 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.21-3.48-8.52zM12 22a9.9 9.9 0 0 1-5.05-1.39l-.36-.21-3.59.93.96-3.5-.23-.37A9.9 9.9 0 0 1 2 12c0-5.52 4.48-10 10-10 2.67 0 5.18 1.04 7.07 2.93A9.98 9.98 0 0 1 22 12c0 5.52-4.48 10-10 10zm5.21-7.52c-.3-.17-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.3-.77 1.02-.94 1.23-.17.2-.35.23-.63.08-.3-.16-1.27-.46-2.41-1.47-.89-.76-1.47-1.7-1.64-1.98-.17-.3-.02-.46.12-.62.14-.16.3-.4.46-.61.15-.22.2-.37.31-.62.1-.26.05-.49-.02-.69-.08-.2-.62-1.49-.85-2.04-.22-.55-.45-.47-.63-.48-.17-.01-.38-.02-.59-.02-.23 0-.6.09-.92.44-.32.35-1.2 1.17-1.2 2.85s1.23 3.3 1.4 3.53c.17.23 2.41 3.71 5.86 5.11.82.35 1.46.56 1.96.73.82.27 1.56.23 2.15.14.66-.1 2.02-.83 2.31-1.63.28-.81.28-1.49.2-1.63-.09-.14-.31-.23-.64-.4z"></path>
-						</svg>
-					  </span>
-					  WhatsApp
-					</button>
-				</div>
+  <div class="form-actions">
+    <button class="btn-submit" type="submit">Book Now</button>
+    <button class="btn-email" type="button" id="whatsappBtn">WhatsApp</button>
+  </div>
+</form>
 
-				<div id="formMsg" role="status" aria-live="polite" style="margin-top:12px;display:none;padding:12px;border-radius:8px"></div>
-			</form>
+<!-- invisible redirect target -->
+<iframe name="hiddenIframe" style="display:none"></iframe>
 		</section>
 
 		<!-- Gallery -->
@@ -1715,7 +1700,7 @@
 		// 3) The script should send email using GmailApp; example provided in documentation
 		// Backend SMTP service endpoint (Node/Express on localhost)
 		var EMAIL_ENDPOINT = ''; // Primary endpoint disabled
-		var FALLBACK_GMAIL_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyxEVr_zKGU9lhEvk9suiT1BeWvqf8GhYC3a_tNPApMHksY2QZ2UJay5iA4xTDvA4ZY/exec';
+		var FALLBACK_GMAIL_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxkk1dS5-PUmMSjvSPXc7jfAJ2OypMF_Vvd04yMQ4s85zEaU4ZUs_Ype6dfj1aIXAHv/exec';
 		var CONFIRMATION_RECIPIENT = 'HHthaihouse@gmail.com';
 		var FROM_ADDRESS = 'HHthaihouse@gmail.com'; // owner email used as replyTo/backend from
 		var lastEmailAttemptTs = 0;
@@ -1946,6 +1931,14 @@ async function sendEmailViaBackend(data){
 			window.addEventListener('keydown', function(e){ if(e.key === 'Tab'){ mouseDown = false; document.documentElement.classList.remove('using-mouse'); } });
 		})();
 	})();
+	
+	if (location.search.includes('sent=1')) {
+  document.getElementById('formMsg').style.display = 'block';
+  document.getElementById('formMsg').style.background = '#f0fff4';
+  document.getElementById('formMsg').style.color = '#0b6b2f';
+  document.getElementById('formMsg').textContent = 'Your booking request was sent successfully. We will contact you soon!';
+}
+	
 	</script>
 	</body>
 	</html>
