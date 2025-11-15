@@ -1,9 +1,13 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: Choxie77/PhoThai-Massage
   branch: main
+  base_url: https://decap-cms-oauth2.netlify.app
 
-media_folder: "static/images"
-public_folder: "/images"
+publish_mode: editorial_workflow
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
 
 collections:
   - name: "services"
