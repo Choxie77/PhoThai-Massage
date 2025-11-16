@@ -1261,11 +1261,12 @@
         <input id="name" name="name" required minlength="2" placeholder="e.g. Jane Doe" autocomplete="name">
       </div>
 
-      <!-- PHONE : country-code + number -->
+      <!-- PHONE : searchable country-code + 9-digit check -->
       <div>
         <label for="phone">Phone <span aria-hidden="true">*</span></label>
         <div style="display:flex;gap:8px">
-          <select id="countryCode" name="countryCode" aria-label="Country code" style="flex:0 0 100px">
+          <!-- searchable country dropdown -->
+          <select id="countryCode" name="countryCode" aria-label="Country code" style="flex:0 0 120px">
             <option value="+66" selected>🇹🇭 +66</option>
             <option value="+1">🇺🇸 +1</option>
             <option value="+44">🇬🇧 +44</option>
@@ -1281,7 +1282,7 @@
             <option value="+61">🇦🇺 +61</option>
           </select>
           <input type="tel" id="phone" name="phone" required placeholder="8 1234 5678"
-                 pattern="[0-9\s\-]{7,}" maxlength="15" autocomplete="tel-national">
+                 pattern="[0-9\s\-]{9,}" maxlength="15" autocomplete="tel-national">
         </div>
         <small id="phoneHelp" class="helper">9 digits minimum after country code</small>
       </div>
@@ -1292,7 +1293,7 @@
         <input type="date" id="date" name="date" required>
       </div>
 
-      <!-- TIME : 30-min slots, 10:00-21:30 -->
+      <!-- TIME : 30-min slots 10:00-21:30 -->
       <div>
         <label for="time">Time <span aria-hidden="true">*</span></label>
         <select id="time" name="time" required>
@@ -1335,6 +1336,128 @@
 
   <iframe name="hiddenIframe" style="display:none" onload="bookingReturned()"></iframe>
 </section>
+
+<!-- 2.  Behaviour -->
+<script>
+/* ---------- helpers ---------- */
+const form       = document.getElementById('bookingForm');
+const countrySel = document.getElementById('countryCode');
+const phoneInp   = document.getElementById('phone');
+const dateInp    = document.getElementById('date');
+const timeSel    = document.getElementById('time');
+const serviceSel = document.getElementById('serviceSelect');
+const priceTag   = document.getElementById('priceTag');
+const submitBtn  = document.getElementById('submitBtn');
+const btnText    = document.getElementById('btnText');
+const whatsBtn   = document.getElementById('whatsappBtn');
+
+/* ---------- country-code + strict 9-digit phone ---------- */
+countrySel.addEventListener('change', () => {
+  phoneInp.value = '';
+  phoneInp.focus();
+  validateForm();
+});
+phoneInp.addEventListener('input', () => {
+  const digits = phoneInp.value.replace(/\D/g, '');
+  phoneInp.value = digits;                                    // strip non-digits
+  validateForm();
+});
+
+/* ---------- date: today & future only ---------- */
+const today = new Date().toISOString().split('T')[0];
+dateInp.setAttribute('min', today);
+dateInp.addEventListener('change', () => {
+  buildTimeSlots();
+  validateForm();
+});
+
+/* ---------- time: 30-min slots 10:00-21:30 ---------- */
+function buildTimeSlots() {
+  timeSel.innerHTML = '<option value="">Select time</option>';
+  const open = 10, close = 21.5;
+  for (let h = open; h < close; h += 0.5) {
+    const hh = Math.floor(h);
+    const mm = (h % 1) === 0 ? '00' : '30';
+    const val = `${String(hh).padStart(2, '0')}:${mm}`;
+    const txt = `${String(hh % 12 || 12)}:${mm} ${h < 12 ? 'AM' : 'PM'}`;
+    timeSel.insertAdjacentHTML('beforeend', `<option value="${val}">${txt}</option>`);
+  }
+}
+buildTimeSlots();
+
+/* ---------- live price ---------- */
+serviceSel.addEventListener('change', () => {
+  const opt = serviceSel.selectedOptions[0];
+  priceTag.textContent = opt.value ? `Total: ${opt.dataset.price || 0} ฿` : '';
+  validateForm();
+});
+
+/* ---------- form validation ---------- */
+function validateForm() {
+  const ok =
+    form.name.value.trim().length >= 2 &&
+    phoneInp.value.replace(/\D/g, '').length >= 9 &&
+    dateInp.value &&
+    timeSel.value &&
+    serviceSel.value;
+  submitBtn.disabled = !ok;
+}
+form.addEventListener('input', validateForm);
+validateForm(); // initial
+
+/* ---------- submit : “Sending…” + fail-safe reset ---------- */
+form.addEventListener('submit', () => {
+  btnText.textContent = 'Sending…';
+  submitBtn.disabled = true;
+  // if iframe never fires (500, network drop) still reset after 5 s
+  setTimeout(() => {
+    btnText.textContent = 'Book Now';
+    submitBtn.disabled = false;
+  }, 5000);
+});
+
+/* ---------- redirect feedback ---------- */
+function bookingReturned() {
+  const params = new URLSearchParams(location.search);
+  const box = document.getElementById('formMsg');
+  if (params.get('sent') === '1') {
+    box.style.display = 'block';
+    box.style.background = '#f0fff4';
+    box.style.color = '#0b6b2f';
+    box.textContent = '✅  Booking sent successfully! We will contact you soon.';
+    btnText.textContent = 'Book Now';
+    submitBtn.disabled = false;
+    form.reset();
+    priceTag.textContent = '';
+    validateForm();
+  } else if (params.get('sent') === '0') {
+    box.style.display = 'block';
+    box.style.background = '#fff4f4';
+    box.style.color = '#6b1c1c';
+    box.textContent = '❌  Could not send booking. Please use WhatsApp or call us.';
+    btnText.textContent = 'Book Now';
+    submitBtn.disabled = false;
+  }
+}
+
+/* ---------- WhatsApp (with country code) ---------- */
+document.getElementById('whatsappBtn').addEventListener('click', () => {
+  const data = {
+    name: form.name.value.trim(),
+    phone: phoneInp.value.trim(),
+    service: serviceSel.value,
+    date: dateInp.value,
+    time: timeSel.value,
+    notes: form.notes.value.trim()
+  };
+  if (!data.name || !data.phone) {
+    alert('Please fill at least Name and Phone first.');
+    return;
+  }
+  const text = `Hi, I'd like to book ${data.service} on ${data.date} at ${data.time}. Name: ${data.name}, Phone: ${countrySel.value} ${data.phone}`;
+  window.open(`https://wa.me/66982455446?text=${encodeURIComponent(text)}`, '_blank');
+});
+</script>
 
 <!-- 2.  Behaviour -->
 <script>
