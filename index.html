@@ -1244,52 +1244,214 @@
 			</div>
 		</section>
 
-		<!-- Booking -->
-	<!-- Booking -->
 <!-- Booking -->
 <section class="booking-section" id="booking" aria-labelledby="bookingHeading">
   <h2 id="bookingHeading">Book Your Appointment</h2>
   <p>Schedule your relaxing Thai massage session today</p>
 
-  <!-- 1.  Plain form -->
   <form id="bookingForm"
         action="https://script.google.com/macros/s/AKfycbzGhQzyhR8uVPNTKpOXmKZmT_pY5zKMYlKlswGkKUKjCIthTttUH87N-r-q1-7mpM5_Ww/exec"
         method="POST"
-        target="hiddenIframe">
+        target="hiddenIframe"
+        novalidate>
     <div class="booking-grid">
-      <div><label for="name">Name</label><input id="name" name="name" required placeholder="Your name"></div>
-      <div><label for="phone">Phone</label><input id="phone" name="phone" required placeholder="Phone number"></div>
-      <div><label for="date">Date</label><input type="date" name="date" required></div>
-      <div><label for="time">Time</label><input type="time" name="time" required min="10:00" max="22:00"></div>
-      <div class="full-width">
-        <label for="serviceSelect">Service</label>
-        <select name="service" required>
-          <option value="">Select service</option>
-          <option>Traditional Thai Massage (60)</option>
-          <option>Natural Oil Massage (60)</option>
-          <option>PhoThai Signature (90)</option>
+      <!-- NAME -->
+      <div>
+        <label for="name">Name <span aria-hidden="true">*</span></label>
+        <input id="name" name="name" required minlength="2" placeholder="e.g. Jane Doe" autocomplete="name">
+      </div>
+
+      <!-- PHONE : country-code + number -->
+      <div>
+        <label for="phone">Phone <span aria-hidden="true">*</span></label>
+        <div style="display:flex;gap:8px">
+          <select id="countryCode" name="countryCode" aria-label="Country code" style="flex:0 0 100px">
+            <option value="+66" selected>🇹🇭 +66</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+49">🇩🇪 +49</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+7">🇷🇺 +7</option>
+            <option value="+86">🇨🇳 +86</option>
+            <option value="+81">🇯🇵 +81</option>
+            <option value="+82">🇰🇷 +82</option>
+            <option value="+84">🇻🇳 +84</option>
+            <option value="+65">🇸🇬 +65</option>
+            <option value="+852">🇭🇰 +852</option>
+            <option value="+61">🇦🇺 +61</option>
+          </select>
+          <input type="tel" id="phone" name="phone" required placeholder="8 1234 5678"
+                 pattern="[0-9\s\-]{7,}" maxlength="15" autocomplete="tel-national">
+        </div>
+        <small id="phoneHelp" class="helper">9 digits minimum after country code</small>
+      </div>
+
+      <!-- DATE : only today & future -->
+      <div>
+        <label for="date">Date <span aria-hidden="true">*</span></label>
+        <input type="date" id="date" name="date" required>
+      </div>
+
+      <!-- TIME : 30-min slots, 10:00-21:30 -->
+      <div>
+        <label for="time">Time <span aria-hidden="true">*</span></label>
+        <select id="time" name="time" required>
+          <option value="">Select time</option>
         </select>
       </div>
+
+      <!-- SERVICE + LIVE PRICE -->
+      <div class="full-width">
+        <label for="serviceSelect">Service <span aria-hidden="true">*</span></label>
+        <select id="serviceSelect" name="service" required>
+          <option value="">Choose service</option>
+          <option value="Traditional Thai Massage (60 min)" data-price="350">Traditional Thai Massage (60 min) – 350 ฿</option>
+          <option value="Traditional Thai Massage (90 min)" data-price="550">Traditional Thai Massage (90 min) – 550 ฿</option>
+          <option value="Natural Oil Massage (60 min)" data-price="450">Natural Oil Massage (60 min) – 450 ฿</option>
+          <option value="Natural Oil Massage (90 min)" data-price="700">Natural Oil Massage (90 min) – 700 ฿</option>
+          <option value="PhoThai Signature (90 min)" data-price="900">PhoThai Signature (90 min) – 900 ฿</option>
+        </select>
+        <div id="priceTag" style="margin-top:8px;font-weight:600;color:#2f7a57"></div>
+      </div>
+
+      <!-- NOTES -->
       <div class="full-width">
         <label for="notes">Special Requests</label>
-        <textarea name="notes" placeholder="Any preferences or notes?"></textarea>
+        <textarea id="notes" name="notes" placeholder="Any preferences, allergies, areas to focus on…" rows="3"></textarea>
       </div>
     </div>
 
+    <!-- SUBMIT + WHATSAPP -->
     <div class="form-actions">
-      <button class="btn-submit" type="submit" id="submitBtn">
+      <button class="btn-submit" type="submit" id="submitBtn" disabled>
         <span id="btnText">Book Now</span>
       </button>
       <button class="btn-email" type="button" id="whatsappBtn">WhatsApp</button>
     </div>
+
+    <!-- feedback bar -->
+    <div id="formMsg" role="status" aria-live="polite" style="margin-top:12px;display:none;padding:12px;border-radius:8px"></div>
   </form>
 
-  <!-- invisible target -->
   <iframe name="hiddenIframe" style="display:none" onload="bookingReturned()"></iframe>
-
-  <!-- success / error bar -->
-  <div id="formMsg" role="status" aria-live="polite" style="margin-top:12px;display:none;padding:12px;border-radius:8px"></div>
 </section>
+
+<!-- 2.  Behaviour -->
+<script>
+/* ---------- helpers ---------- */
+const form       = document.getElementById('bookingForm');
+const countrySel = document.getElementById('countryCode');
+const phoneInp   = document.getElementById('phone');
+const dateInp    = document.getElementById('date');
+const timeSel    = document.getElementById('time');
+const serviceSel = document.getElementById('serviceSelect');
+const priceTag   = document.getElementById('priceTag');
+const submitBtn  = document.getElementById('submitBtn');
+const btnText    = document.getElementById('btnText');
+const whatsBtn   = document.getElementById('whatsappBtn');
+
+/* ---------- country-code + phone format ---------- */
+countrySel.addEventListener('change', () => {
+  phoneInp.value = '';                       // clear on change
+  phoneInp.focus();
+  validateForm();
+});
+phoneInp.addEventListener('input', () => {
+  const digits = phoneInp.value.replace(/\D/g, '');
+  if (countrySel.value === '+66') phoneInp.value = digits.replace(/(\d{1})(\d{4})(\d{3})/, '$1 $2 $3').slice(0, 11);
+  validateForm();
+});
+
+/* ---------- date: today & future only ---------- */
+const today = new Date().toISOString().split('T')[0];
+dateInp.setAttribute('min', today);
+dateInp.addEventListener('change', () => {
+  buildTimeSlots();
+  validateForm();
+});
+
+/* ---------- time: 30-min slots 10:00-21:30 ---------- */
+function buildTimeSlots() {
+  timeSel.innerHTML = '<option value="">Select time</option>';
+  const open = 10, close = 21.5; // 21:30
+  for (let h = open; h < close; h += 0.5) {
+    const hh = Math.floor(h);
+    const mm = (h % 1) === 0 ? '00' : '30';
+    const val = `${String(hh).padStart(2, '0')}:${mm}`;
+    const txt = `${String(hh % 12 || 12)}:${mm} ${h < 12 ? 'AM' : 'PM'}`;
+    timeSel.insertAdjacentHTML('beforeend', `<option value="${val}">${txt}</option>`);
+  }
+}
+buildTimeSlots();
+
+/* ---------- live price ---------- */
+serviceSel.addEventListener('change', () => {
+  const opt = serviceSel.selectedOptions[0];
+  priceTag.textContent = opt.value ? `Total: ${opt.dataset.price || 0} ฿` : '';
+  validateForm();
+});
+
+/* ---------- form validation ---------- */
+function validateForm() {
+  const ok =
+    form.name.value.trim().length >= 2 &&
+    form.phone.value.replace(/\D/g, '').length >= 9 &&
+    form.date.value &&
+    form.time.value &&
+    form.service.value;
+  submitBtn.disabled = !ok;
+}
+form.addEventListener('input', validateForm);
+validateForm(); // initial
+
+/* ---------- submit state ---------- */
+form.addEventListener('submit', () => {
+  btnText.textContent = 'Sending…';
+  submitBtn.disabled = true;
+});
+
+/* ---------- redirect feedback ---------- */
+function bookingReturned() {
+  const params = new URLSearchParams(location.search);
+  const box = document.getElementById('formMsg');
+  if (params.get('sent') === '1') {
+    box.style.display = 'block';
+    box.style.background = '#f0fff4';
+    box.style.color = '#0b6b2f';
+    box.textContent = '✅  Booking sent successfully! We will contact you soon.';
+    btnText.textContent = 'Book Now';
+    submitBtn.disabled = false;
+    form.reset();
+    priceTag.textContent = '';
+    validateForm();
+  } else if (params.get('sent') === '0') {
+    box.style.display = 'block';
+    box.style.background = '#fff4f4';
+    box.style.color = '#6b1c1c';
+    box.textContent = '❌  Could not send booking. Please use WhatsApp or call us.';
+    btnText.textContent = 'Book Now';
+    submitBtn.disabled = false;
+  }
+}
+
+/* ---------- WhatsApp (with country code) ---------- */
+document.getElementById('whatsappBtn').addEventListener('click', () => {
+  const data = {
+    name: form.name.value.trim(),
+    phone: form.phone.value.trim(),
+    service: form.service.value,
+    date: form.date.value,
+    time: form.time.value,
+    notes: form.notes.value.trim()
+  };
+  if (!data.name || !data.phone) {
+    alert('Please fill at least Name and Phone first.');
+    return;
+  }
+  const text = `Hi, I'd like to book ${data.service} on ${data.date} at ${data.time}. Name: ${data.name}, Phone: ${countrySel.value} ${data.phone}`;
+  window.open(`https://wa.me/66982455446?text=${encodeURIComponent(text)}`, '_blank');
+});
+</script>
 
 <!-- 2.  Tiny helper -->
 <script>
