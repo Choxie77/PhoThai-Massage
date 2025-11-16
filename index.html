@@ -1246,32 +1246,21 @@
 
 		<!-- Booking -->
 	<!-- Booking -->
+<!-- Booking -->
 <section class="booking-section" id="booking" aria-labelledby="bookingHeading">
   <h2 id="bookingHeading">Book Your Appointment</h2>
   <p>Schedule your relaxing Thai massage session today</p>
 
-  <!-- 1.  Plain form – no JavaScript -->
+  <!-- 1.  Plain form -->
   <form id="bookingForm"
         action="https://script.google.com/macros/s/AKfycbzGhQzyhR8uVPNTKpOXmKZmT_pY5zKMYlKlswGkKUKjCIthTttUH87N-r-q1-7mpM5_Ww/exec"
         method="POST"
         target="hiddenIframe">
     <div class="booking-grid">
-      <div>
-        <label for="name">Name</label>
-        <input id="name" name="name" required placeholder="Your name">
-      </div>
-      <div>
-        <label for="phone">Phone</label>
-        <input id="phone" name="phone" required placeholder="Phone number">
-      </div>
-      <div>
-        <label for="date">Date</label>
-        <input type="date" name="date" required>
-      </div>
-      <div>
-        <label for="time">Time</label>
-        <input type="time" name="time" required min="10:00" max="22:00">
-      </div>
+      <div><label for="name">Name</label><input id="name" name="name" required placeholder="Your name"></div>
+      <div><label for="phone">Phone</label><input id="phone" name="phone" required placeholder="Phone number"></div>
+      <div><label for="date">Date</label><input type="date" name="date" required></div>
+      <div><label for="time">Time</label><input type="time" name="time" required min="10:00" max="22:00"></div>
       <div class="full-width">
         <label for="serviceSelect">Service</label>
         <select name="service" required>
@@ -1288,17 +1277,53 @@
     </div>
 
     <div class="form-actions">
-      <button class="btn-submit" type="submit">Book Now</button>
+      <button class="btn-submit" type="submit" id="submitBtn">
+        <span id="btnText">Book Now</span>
+      </button>
       <button class="btn-email" type="button" id="whatsappBtn">WhatsApp</button>
     </div>
   </form>
 
-  <!-- 2.  Invisible redirect target -->
-  <iframe name="hiddenIframe" style="display:none"></iframe>
+  <!-- invisible target -->
+  <iframe name="hiddenIframe" style="display:none" onload="bookingReturned()"></iframe>
 
-  <!-- 3.  Success message (shown when user comes back) -->
+  <!-- success / error bar -->
   <div id="formMsg" role="status" aria-live="polite" style="margin-top:12px;display:none;padding:12px;border-radius:8px"></div>
 </section>
+
+<!-- 2.  Tiny helper -->
+<script>
+/* show “Sending…” while form is travelling */
+const form = document.getElementById('bookingForm');
+const btn  = document.getElementById('submitBtn');
+const txt  = document.getElementById('btnText');
+form.addEventListener('submit', () => {
+  txt.textContent = 'Sending…';
+  btn.disabled = true;
+});
+
+/* called when iframe comes back (redirect finished) */
+function bookingReturned() {
+  const params = new URLSearchParams(location.search);
+  const box = document.getElementById('formMsg');
+  if (params.get('sent') === '1') {
+    box.style.display = 'block';
+    box.style.background = '#f0fff4';
+    box.style.color = '#0b6b2f';
+    box.textContent = '✅  Booking sent successfully! We will contact you soon.';
+    txt.textContent = 'Book Now';          // reset button
+    btn.disabled = false;
+    form.reset();                          // clear fields
+  } else if (params.get('sent') === '0') {
+    box.style.display = 'block';
+    box.style.background = '#fff4f4';
+    box.style.color = '#6b1c1c';
+    box.textContent = '❌  Could not send booking. Please use WhatsApp or call us.';
+    txt.textContent = 'Book Now';
+    btn.disabled = false;
+  }
+}
+</script>
 
 <!-- invisible redirect target -->
 <iframe name="hiddenIframe" style="display:none"></iframe>
