@@ -1058,8 +1058,15 @@
 	}
 
 	</style>
-	</head>
+	
+<!-- intl-tel-input (professional phone input with flags & formatting) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" integrity="" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js" integrity="" crossorigin="anonymous" defer></script>
+
+</head>
 	<body>
+<style>#countryCode{display:none!important}</style>
+
 
 	<!-- Skip to main content link for screen readers -->
 	<a href="#main" class="skip-link">Skip to main content</a>
@@ -1428,6 +1435,76 @@
     <div id="formMsg" role="status" aria-live="polite" style="margin-top:12px;display:none;padding:12px;border-radius:8px"></div>
   </form>
 <script>
+/* Phone UI: initialize intl-tel-input and sync a hidden countryCode input.
+   Placed after the booking </form> as requested (placement A). */
+
+(function(){
+  var phone = document.getElementById('phone');
+  var countrySelect = document.getElementById('countryCode');
+  var bookingForm = document.getElementById('bookingForm');
+
+  if(!phone || !bookingForm) return;
+
+  // Hide the old select (already hidden via CSS) but keep it in DOM for fallback.
+  if(countrySelect) countrySelect.setAttribute('aria-hidden','true');
+
+  // Create hidden input to submit the selected country dial code (e.g. +66)
+  var hiddenCc = document.createElement('input');
+  hiddenCc.type = 'hidden';
+  hiddenCc.name = 'countryCode';
+  hiddenCc.id = 'countryCodeHidden';
+  bookingForm.appendChild(hiddenCc);
+
+  // Initialize intl-tel-input once the library is available
+  function initITI(){
+    if(typeof window.intlTelInput === 'undefined') {
+      // If the library hasn't loaded yet, try again shortly.
+      setTimeout(initITI, 200);
+      return;
+    }
+    var iti = window.intlTelInput(phone, {
+      initialCountry: 'th',
+      separateDialCode: true,
+      preferredCountries: ['th','gb','us','au'],
+      utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
+    });
+
+    // When the form is submitted, ensure we set the hidden country code and strip spaces from phone
+    bookingForm.addEventListener('submit', function(e){
+      var dataDial = iti.getSelectedCountryData();
+      if(dataDial && dataDial.dialCode){
+        hiddenCc.value = '+' + dataDial.dialCode;
+      } else {
+        // fallback: if original select exists, copy its value
+        if(countrySelect && countrySelect.value) hiddenCc.value = countrySelect.value;
+      }
+      // clean phone field for submission
+      phone.value = phone.value.replace(/\s+/g,'').replace(/[^0-9+]/g,'');
+    });
+
+    // Only validate fields after user interaction — remove any 'is-invalid' on load
+    var inputs = bookingForm.querySelectorAll('input, select, textarea');
+    inputs.forEach(function(inp){
+      inp.classList.remove('is-invalid');
+      // Add touched behavior: mark invalid only after blur
+      inp.addEventListener('blur', function(){
+        if(!inp.checkValidity()){
+          inp.classList.add('is-invalid');
+        } else {
+          inp.classList.remove('is-invalid');
+        }
+      });
+      inp.addEventListener('input', function(){
+        inp.classList.remove('is-invalid');
+      });
+    });
+  }
+
+  initITI();
+})();
+</script>
+
+<script>
 // --- Merged booking script (advanced) ---
 (function(){
   // Elements
@@ -1673,17 +1750,12 @@
   }
 
   // Initial validation state
-  setTimeout(validateForm, 50);
+  // initial validation suppressed until user interaction;
 })(); 
 </script>
 
 
-  <iframe 
-  aria-label="Map showing both PhoThai massage locations"
-  loading="lazy" 
-  style="width:100%;height:450px;border:0" 
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15794.5!2d100.0475!3d9.5375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMzInMTUuNyJOIDEwMMKwMDInMzYuNyJF!5e0!3m2!1sen!2sth!4v1635000000000!5m2!1sen!2sth"></iframe>
-</section>
+  </section>
 
 <style>
 /* Location Selector Styles */
