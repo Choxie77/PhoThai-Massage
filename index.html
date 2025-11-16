@@ -1244,7 +1244,7 @@
 			</div>
 		</section>
 
-<!-- Booking -->
+<!-- Booking Section with Location Selector -->
 <section class="booking-section" id="booking" aria-labelledby="bookingHeading">
   <h2 id="bookingHeading">Book Your Appointment</h2>
   <p>Schedule your relaxing Thai massage session today</p>
@@ -1255,45 +1255,90 @@
         target="hiddenIframe"
         novalidate>
     <div class="booking-grid">
+      
       <!-- NAME -->
       <div>
         <label for="name">Name <span aria-hidden="true">*</span></label>
         <input id="name" name="name" required minlength="2" placeholder="e.g. Jane Doe" autocomplete="name">
       </div>
 
-      <!-- PHONE : searchable country-code + 9-digit check -->
+      <!-- PHONE with searchable country code -->
       <div>
         <label for="phone">Phone <span aria-hidden="true">*</span></label>
         <div style="display:flex;gap:8px">
-          <!-- searchable country dropdown -->
-          <select id="countryCode" name="countryCode" aria-label="Country code" style="flex:0 0 120px">
-            <option value="+66" selected>🇹🇭 +66</option>
-            <option value="+1">🇺🇸 +1</option>
-            <option value="+44">🇬🇧 +44</option>
-            <option value="+49">🇩🇪 +49</option>
-            <option value="+33">🇫🇷 +33</option>
-            <option value="+7">🇷🇺 +7</option>
-            <option value="+86">🇨🇳 +86</option>
-            <option value="+81">🇯🇵 +81</option>
-            <option value="+82">🇰🇷 +82</option>
-            <option value="+84">🇻🇳 +84</option>
-            <option value="+65">🇸🇬 +65</option>
-            <option value="+852">🇭🇰 +852</option>
-            <option value="+61">🇦🇺 +61</option>
-          </select>
-          <input type="tel" id="phone" name="phone" required placeholder="8 1234 5678"
-                 pattern="[0-9\s\-]{9,}" maxlength="15" autocomplete="tel-national">
+          <div style="position:relative;flex:0 0 140px">
+            <input type="text" 
+                   id="countryCodeSearch" 
+                   placeholder="🔍 +66"
+                   style="width:100%;padding:12px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:0.95rem"
+                   autocomplete="off">
+            <div id="countryDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #d1d5db;border-radius:8px;margin-top:4px;max-height:240px;overflow-y:auto;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,0.1)"></div>
+            <input type="hidden" id="countryCode" name="countryCode" value="+66">
+          </div>
+          <input type="tel" 
+                 id="phone" 
+                 name="phone" 
+                 required 
+                 placeholder="8 1234 5678"
+                 pattern="[0-9\s\-]{9,}" 
+                 autocomplete="tel-national"
+                 style="flex:1">
         </div>
-        <small id="phoneHelp" class="helper">9 digits minimum after country code</small>
+        <small style="color:#6b7280;font-size:0.85rem;margin-top:4px;display:block">9 digits minimum</small>
       </div>
 
-      <!-- DATE : only today & future -->
+      <!-- LOCATION SELECTOR -->
+      <div class="full-width">
+        <label>Choose Location <span aria-hidden="true">*</span></label>
+        <div class="location-selector">
+          <label class="location-option" for="location1">
+            <input type="radio" id="location1" name="location" value="Bo Put (Main)" required checked>
+            <div class="location-card">
+              <div class="location-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor"/>
+                  <circle cx="12" cy="9" r="2.5" fill="white"/>
+                </svg>
+                <h4>Bo Put (Main Location)</h4>
+              </div>
+              <p class="location-address">70/5 Tambon Bo Put, Ko Samui 84320</p>
+              <div class="location-features">
+                <span class="feature-badge">Most Popular</span>
+                <span class="feature-badge">Street Parking</span>
+              </div>
+            </div>
+          </label>
+
+          <label class="location-option" for="location2">
+            <input type="radio" id="location2" name="location" value="Chaweng">
+            <div class="location-card">
+              <div class="location-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor"/>
+                  <circle cx="12" cy="9" r="2.5" fill="white"/>
+                </svg>
+                <h4>Chaweng Branch</h4>
+              </div>
+              <p class="location-address">14/1 Tambon Bo Put, Ko Samui 84310</p>
+              <div class="location-features">
+                <span class="feature-badge">Beach Area</span>
+                <span class="feature-badge">Quiet Setting</span>
+              </div>
+            </div>
+          </label>
+        </div>
+        <div id="selectedLocationMap" style="margin-top:12px;border-radius:8px;overflow:hidden;height:200px;display:none">
+          <iframe id="locationMapFrame" loading="lazy" style="width:100%;height:100%;border:0" src=""></iframe>
+        </div>
+      </div>
+
+      <!-- DATE -->
       <div>
         <label for="date">Date <span aria-hidden="true">*</span></label>
         <input type="date" id="date" name="date" required>
       </div>
 
-      <!-- TIME : 30-min slots 10:00-21:30 -->
+      <!-- TIME -->
       <div>
         <label for="time">Time <span aria-hidden="true">*</span></label>
         <select id="time" name="time" required>
@@ -1301,16 +1346,21 @@
         </select>
       </div>
 
-      <!-- SERVICE + LIVE PRICE -->
+      <!-- SERVICE -->
       <div class="full-width">
         <label for="serviceSelect">Service <span aria-hidden="true">*</span></label>
         <select id="serviceSelect" name="service" required>
           <option value="">Choose service</option>
-          <option value="Traditional Thai Massage (60 min)" data-price="350">Traditional Thai Massage (60 min) – 350 ฿</option>
-          <option value="Traditional Thai Massage (90 min)" data-price="550">Traditional Thai Massage (90 min) – 550 ฿</option>
-          <option value="Natural Oil Massage (60 min)" data-price="450">Natural Oil Massage (60 min) – 450 ฿</option>
-          <option value="Natural Oil Massage (90 min)" data-price="700">Natural Oil Massage (90 min) – 700 ฿</option>
-          <option value="PhoThai Signature (90 min)" data-price="900">PhoThai Signature (90 min) – 900 ฿</option>
+          <option value="Traditional Thai Massage (60 min)" data-price="350">Traditional Thai Massage (60 min) — 350 ฿</option>
+          <option value="Traditional Thai Massage (90 min)" data-price="550">Traditional Thai Massage (90 min) — 550 ฿</option>
+          <option value="Reflexology Foot Massage (60 min)" data-price="300">Reflexology Foot Massage (60 min) — 300 ฿</option>
+          <option value="Reflexology Foot Massage (90 min)" data-price="450">Reflexology Foot Massage (90 min) — 450 ฿</option>
+          <option value="Natural Oil Massage (60 min)" data-price="450">Natural Oil Massage (60 min) — 450 ฿</option>
+          <option value="Natural Oil Massage (90 min)" data-price="700">Natural Oil Massage (90 min) — 700 ฿</option>
+          <option value="Thai Herbal Compress (60 min)" data-price="600">Thai Herbal Compress (60 min) — 600 ฿</option>
+          <option value="Thai Herbal Compress (90 min)" data-price="900">Thai Herbal Compress (90 min) — 900 ฿</option>
+          <option value="Aroma Body Massage (60 min)" data-price="600">Aroma Body Massage (60 min) — 600 ฿</option>
+          <option value="Aroma Body Massage (90 min)" data-price="1000">Aroma Body Massage (90 min) — 1,000 ฿</option>
         </select>
         <div id="priceTag" style="margin-top:8px;font-weight:600;color:#2f7a57"></div>
       </div>
@@ -1330,40 +1380,267 @@
       <button class="btn-email" type="button" id="whatsappBtn">WhatsApp</button>
     </div>
 
-    <!-- feedback bar -->
     <div id="formMsg" role="status" aria-live="polite" style="margin-top:12px;display:none;padding:12px;border-radius:8px"></div>
   </form>
 
   <iframe name="hiddenIframe" style="display:none" onload="bookingReturned()"></iframe>
 </section>
 
-<!-- 2.  Behaviour -->
-<script>
-/* ---------- helpers ---------- */
-const form       = document.getElementById('bookingForm');
-const countrySel = document.getElementById('countryCode');
-const phoneInp   = document.getElementById('phone');
-const dateInp    = document.getElementById('date');
-const timeSel    = document.getElementById('time');
-const serviceSel = document.getElementById('serviceSelect');
-const priceTag   = document.getElementById('priceTag');
-const submitBtn  = document.getElementById('submitBtn');
-const btnText    = document.getElementById('btnText');
-const whatsBtn   = document.getElementById('whatsappBtn');
+<style>
+/* Location Selector Styles */
+.location-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
 
-/* ---------- country-code + strict 9-digit phone ---------- */
-countrySel.addEventListener('change', () => {
-  phoneInp.value = '';
-  phoneInp.focus();
-  validateForm();
+.location-option {
+  cursor: pointer;
+  display: block;
+}
+
+.location-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.location-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  background: #fff;
+  height: 100%;
+}
+
+.location-option input[type="radio"]:checked + .location-card {
+  border-color: #2f7a57;
+  background: linear-gradient(135deg, rgba(47,122,87,0.05) 0%, rgba(47,122,87,0.02) 100%);
+  box-shadow: 0 4px 12px rgba(47,122,87,0.15);
+}
+
+.location-card:hover {
+  border-color: #2f7a57;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.location-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.location-header svg {
+  color: #2f7a57;
+  flex-shrink: 0;
+}
+
+.location-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f5f43;
+}
+
+.location-address {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin: 8px 0;
+  line-height: 1.4;
+}
+
+.location-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.feature-badge {
+  background: #f0f9ff;
+  color: #0369a1;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.location-option input[type="radio"]:checked + .location-card .feature-badge {
+  background: #2f7a57;
+  color: #fff;
+}
+
+/* Country code dropdown */
+#countryDropdown {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.country-option {
+  padding: 10px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.country-option:hover {
+  background: #f3f4f6;
+}
+
+.country-option.selected {
+  background: #e8f5e9;
+  font-weight: 600;
+}
+
+.country-flag {
+  font-size: 1.2rem;
+}
+
+.country-details {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .location-selector {
+    grid-template-columns: 1fr;
+  }
+  
+  .location-card {
+    padding: 14px;
+  }
+}
+</style>
+
+<script>
+// Expanded country codes with flags
+const countries = [
+  { code: '+66', flag: '🇹🇭', name: 'Thailand' },
+  { code: '+1', flag: '🇺🇸', name: 'USA/Canada' },
+  { code: '+44', flag: '🇬🇧', name: 'UK' },
+  { code: '+49', flag: '🇩🇪', name: 'Germany' },
+  { code: '+33', flag: '🇫🇷', name: 'France' },
+  { code: '+39', flag: '🇮🇹', name: 'Italy' },
+  { code: '+34', flag: '🇪🇸', name: 'Spain' },
+  { code: '+7', flag: '🇷🇺', name: 'Russia' },
+  { code: '+86', flag: '🇨🇳', name: 'China' },
+  { code: '+81', flag: '🇯🇵', name: 'Japan' },
+  { code: '+82', flag: '🇰🇷', name: 'South Korea' },
+  { code: '+84', flag: '🇻🇳', name: 'Vietnam' },
+  { code: '+65', flag: '🇸🇬', name: 'Singapore' },
+  { code: '+60', flag: '🇲🇾', name: 'Malaysia' },
+  { code: '+62', flag: '🇮🇩', name: 'Indonesia' },
+  { code: '+63', flag: '🇵🇭', name: 'Philippines' },
+  { code: '+852', flag: '🇭🇰', name: 'Hong Kong' },
+  { code: '+886', flag: '🇹🇼', name: 'Taiwan' },
+  { code: '+91', flag: '🇮🇳', name: 'India' },
+  { code: '+61', flag: '🇦🇺', name: 'Australia' },
+  { code: '+64', flag: '🇳🇿', name: 'New Zealand' },
+  { code: '+27', flag: '🇿🇦', name: 'South Africa' },
+  { code: '+971', flag: '🇦🇪', name: 'UAE' },
+  { code: '+966', flag: '🇸🇦', name: 'Saudi Arabia' },
+  { code: '+20', flag: '🇪🇬', name: 'Egypt' },
+  { code: '+52', flag: '🇲🇽', name: 'Mexico' },
+  { code: '+55', flag: '🇧🇷', name: 'Brazil' },
+  { code: '+54', flag: '🇦🇷', name: 'Argentina' },
+  { code: '+56', flag: '🇨🇱', name: 'Chile' },
+  { code: '+47', flag: '🇳🇴', name: 'Norway' },
+  { code: '+46', flag: '🇸🇪', name: 'Sweden' },
+  { code: '+45', flag: '🇩🇰', name: 'Denmark' },
+  { code: '+358', flag: '🇫🇮', name: 'Finland' },
+  { code: '+31', flag: '🇳🇱', name: 'Netherlands' },
+  { code: '+32', flag: '🇧🇪', name: 'Belgium' },
+  { code: '+41', flag: '🇨🇭', name: 'Switzerland' },
+  { code: '+43', flag: '🇦🇹', name: 'Austria' },
+  { code: '+48', flag: '🇵🇱', name: 'Poland' },
+  { code: '+420', flag: '🇨🇿', name: 'Czech Republic' },
+  { code: '+351', flag: '🇵🇹', name: 'Portugal' },
+  { code: '+30', flag: '🇬🇷', name: 'Greece' },
+  { code: '+90', flag: '🇹🇷', name: 'Turkey' },
+  { code: '+972', flag: '🇮🇱', name: 'Israel' }
+];
+
+const form = document.getElementById('bookingForm');
+const countrySearch = document.getElementById('countryCodeSearch');
+const countryCode = document.getElementById('countryCode');
+const dropdown = document.getElementById('countryDropdown');
+const phoneInp = document.getElementById('phone');
+const dateInp = document.getElementById('date');
+const timeSel = document.getElementById('time');
+const serviceSel = document.getElementById('serviceSelect');
+const priceTag = document.getElementById('priceTag');
+const submitBtn = document.getElementById('submitBtn');
+const btnText = document.getElementById('btnText');
+
+// Initialize country selector
+let selectedCountry = countries[0];
+countrySearch.value = `${selectedCountry.flag} ${selectedCountry.code}`;
+
+function renderCountryOptions(filter = '') {
+  const filtered = countries.filter(c => 
+    c.name.toLowerCase().includes(filter.toLowerCase()) ||
+    c.code.includes(filter)
+  );
+  
+  dropdown.innerHTML = filtered.map(c => `
+    <div class="country-option ${c.code === selectedCountry.code ? 'selected' : ''}" data-code="${c.code}" data-flag="${c.flag}" data-name="${c.name}">
+      <span class="country-flag">${c.flag}</span>
+      <div class="country-details">
+        <span>${c.name}</span>
+        <span style="color:#6b7280">${c.code}</span>
+      </div>
+    </div>
+  `).join('');
+  
+  dropdown.querySelectorAll('.country-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      selectedCountry = {
+        code: opt.dataset.code,
+        flag: opt.dataset.flag,
+        name: opt.dataset.name
+      };
+      countrySearch.value = `${selectedCountry.flag} ${selectedCountry.code}`;
+      countryCode.value = selectedCountry.code;
+      dropdown.style.display = 'none';
+      phoneInp.focus();
+      validateForm();
+    });
+  });
+}
+
+countrySearch.addEventListener('focus', () => {
+  renderCountryOptions();
+  dropdown.style.display = 'block';
 });
+
+countrySearch.addEventListener('input', (e) => {
+  renderCountryOptions(e.target.value.replace(/[🇦-🇿]/g, '').trim());
+  dropdown.style.display = 'block';
+});
+
+document.addEventListener('click', (e) => {
+  if (!countrySearch.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.style.display = 'none';
+    countrySearch.value = `${selectedCountry.flag} ${selectedCountry.code}`;
+  }
+});
+
+// Phone validation
 phoneInp.addEventListener('input', () => {
   const digits = phoneInp.value.replace(/\D/g, '');
-  phoneInp.value = digits;                                    // strip non-digits
+  phoneInp.value = digits;
   validateForm();
 });
 
-/* ---------- date: today & future only ---------- */
+// Date: today and future only
 const today = new Date().toISOString().split('T')[0];
 dateInp.setAttribute('min', today);
 dateInp.addEventListener('change', () => {
@@ -1371,7 +1648,7 @@ dateInp.addEventListener('change', () => {
   validateForm();
 });
 
-/* ---------- time: 30-min slots 10:00-21:30 ---------- */
+// Time slots
 function buildTimeSlots() {
   timeSel.innerHTML = '<option value="">Select time</option>';
   const open = 10, close = 21.5;
@@ -1385,38 +1662,58 @@ function buildTimeSlots() {
 }
 buildTimeSlots();
 
-/* ---------- live price ---------- */
+// Live price
 serviceSel.addEventListener('change', () => {
   const opt = serviceSel.selectedOptions[0];
   priceTag.textContent = opt.value ? `Total: ${opt.dataset.price || 0} ฿` : '';
   validateForm();
 });
 
-/* ---------- form validation ---------- */
+// Location selector with map update
+const locationRadios = document.querySelectorAll('input[name="location"]');
+const mapContainer = document.getElementById('selectedLocationMap');
+const mapFrame = document.getElementById('locationMapFrame');
+
+const locationMaps = {
+  'Bo Put (Main)': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3948.5!2d100.0478!3d9.5356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMzInMDguMiJOIDEwMMKwMDInNTIuMSJF!5e0!3m2!1sen!2sth!4v1635000000000!5m2!1sen!2sth',
+  'Chaweng': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3948.3!2d100.0625!3d9.5389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMzInMjAuMCJOIDEwMMKwMDMnNDUuMCJF!5e0!3m2!1sen!2sth!4v1635000000000!5m2!1sen!2sth'
+};
+
+locationRadios.forEach(radio => {
+  radio.addEventListener('change', (e) => {
+    const location = e.target.value;
+    mapFrame.src = locationMaps[location];
+    mapContainer.style.display = 'block';
+    setTimeout(() => mapContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    validateForm();
+  });
+});
+
+// Form validation
 function validateForm() {
   const ok =
     form.name.value.trim().length >= 2 &&
     phoneInp.value.replace(/\D/g, '').length >= 9 &&
     dateInp.value &&
     timeSel.value &&
-    serviceSel.value;
+    serviceSel.value &&
+    form.location.value;
   submitBtn.disabled = !ok;
 }
 form.addEventListener('input', validateForm);
-validateForm(); // initial
+validateForm();
 
-/* ---------- submit : “Sending…” + fail-safe reset ---------- */
+// Submit state
 form.addEventListener('submit', () => {
   btnText.textContent = 'Sending…';
   submitBtn.disabled = true;
-  // if iframe never fires (500, network drop) still reset after 5 s
   setTimeout(() => {
     btnText.textContent = 'Book Now';
     submitBtn.disabled = false;
   }, 5000);
 });
 
-/* ---------- redirect feedback ---------- */
+// Redirect feedback
 function bookingReturned() {
   const params = new URLSearchParams(location.search);
   const box = document.getElementById('formMsg');
@@ -1424,23 +1721,24 @@ function bookingReturned() {
     box.style.display = 'block';
     box.style.background = '#f0fff4';
     box.style.color = '#0b6b2f';
-    box.textContent = '✅  Booking sent successfully! We will contact you soon.';
+    box.textContent = '✅ Booking sent successfully! We will contact you soon.';
     btnText.textContent = 'Book Now';
     submitBtn.disabled = false;
     form.reset();
     priceTag.textContent = '';
+    mapContainer.style.display = 'none';
     validateForm();
   } else if (params.get('sent') === '0') {
     box.style.display = 'block';
     box.style.background = '#fff4f4';
     box.style.color = '#6b1c1c';
-    box.textContent = '❌  Could not send booking. Please use WhatsApp or call us.';
+    box.textContent = '❌ Could not send booking. Please use WhatsApp or call us.';
     btnText.textContent = 'Book Now';
     submitBtn.disabled = false;
   }
 }
 
-/* ---------- WhatsApp (with country code) ---------- */
+// WhatsApp button
 document.getElementById('whatsappBtn').addEventListener('click', () => {
   const data = {
     name: form.name.value.trim(),
@@ -1448,166 +1746,15 @@ document.getElementById('whatsappBtn').addEventListener('click', () => {
     service: serviceSel.value,
     date: dateInp.value,
     time: timeSel.value,
-    notes: form.notes.value.trim()
+    location: form.location.value
   };
   if (!data.name || !data.phone) {
     alert('Please fill at least Name and Phone first.');
     return;
   }
-  const text = `Hi, I'd like to book ${data.service} on ${data.date} at ${data.time}. Name: ${data.name}, Phone: ${countrySel.value} ${data.phone}`;
+  const text = `Hi, I'd like to book ${data.service} at ${data.location} on ${data.date} at ${data.time}. Name: ${data.name}, Phone: ${countryCode.value} ${data.phone}`;
   window.open(`https://wa.me/66982455446?text=${encodeURIComponent(text)}`, '_blank');
 });
-</script>
-
-<!-- 2.  Behaviour -->
-<script>
-/* ---------- helpers ---------- */
-const form       = document.getElementById('bookingForm');
-const countrySel = document.getElementById('countryCode');
-const phoneInp   = document.getElementById('phone');
-const dateInp    = document.getElementById('date');
-const timeSel    = document.getElementById('time');
-const serviceSel = document.getElementById('serviceSelect');
-const priceTag   = document.getElementById('priceTag');
-const submitBtn  = document.getElementById('submitBtn');
-const btnText    = document.getElementById('btnText');
-const whatsBtn   = document.getElementById('whatsappBtn');
-
-/* ---------- country-code + phone format ---------- */
-countrySel.addEventListener('change', () => {
-  phoneInp.value = '';                       // clear on change
-  phoneInp.focus();
-  validateForm();
-});
-phoneInp.addEventListener('input', () => {
-  const digits = phoneInp.value.replace(/\D/g, '');
-  if (countrySel.value === '+66') phoneInp.value = digits.replace(/(\d{1})(\d{4})(\d{3})/, '$1 $2 $3').slice(0, 11);
-  validateForm();
-});
-
-/* ---------- date: today & future only ---------- */
-const today = new Date().toISOString().split('T')[0];
-dateInp.setAttribute('min', today);
-dateInp.addEventListener('change', () => {
-  buildTimeSlots();
-  validateForm();
-});
-
-/* ---------- time: 30-min slots 10:00-21:30 ---------- */
-function buildTimeSlots() {
-  timeSel.innerHTML = '<option value="">Select time</option>';
-  const open = 10, close = 21.5; // 21:30
-  for (let h = open; h < close; h += 0.5) {
-    const hh = Math.floor(h);
-    const mm = (h % 1) === 0 ? '00' : '30';
-    const val = `${String(hh).padStart(2, '0')}:${mm}`;
-    const txt = `${String(hh % 12 || 12)}:${mm} ${h < 12 ? 'AM' : 'PM'}`;
-    timeSel.insertAdjacentHTML('beforeend', `<option value="${val}">${txt}</option>`);
-  }
-}
-buildTimeSlots();
-
-/* ---------- live price ---------- */
-serviceSel.addEventListener('change', () => {
-  const opt = serviceSel.selectedOptions[0];
-  priceTag.textContent = opt.value ? `Total: ${opt.dataset.price || 0} ฿` : '';
-  validateForm();
-});
-
-/* ---------- form validation ---------- */
-function validateForm() {
-  const ok =
-    form.name.value.trim().length >= 2 &&
-    form.phone.value.replace(/\D/g, '').length >= 9 &&
-    form.date.value &&
-    form.time.value &&
-    form.service.value;
-  submitBtn.disabled = !ok;
-}
-form.addEventListener('input', validateForm);
-validateForm(); // initial
-
-/* ---------- submit state ---------- */
-form.addEventListener('submit', () => {
-  btnText.textContent = 'Sending…';
-  submitBtn.disabled = true;
-});
-
-/* ---------- redirect feedback ---------- */
-function bookingReturned() {
-  const params = new URLSearchParams(location.search);
-  const box = document.getElementById('formMsg');
-  if (params.get('sent') === '1') {
-    box.style.display = 'block';
-    box.style.background = '#f0fff4';
-    box.style.color = '#0b6b2f';
-    box.textContent = '✅  Booking sent successfully! We will contact you soon.';
-    btnText.textContent = 'Book Now';
-    submitBtn.disabled = false;
-    form.reset();
-    priceTag.textContent = '';
-    validateForm();
-  } else if (params.get('sent') === '0') {
-    box.style.display = 'block';
-    box.style.background = '#fff4f4';
-    box.style.color = '#6b1c1c';
-    box.textContent = '❌  Could not send booking. Please use WhatsApp or call us.';
-    btnText.textContent = 'Book Now';
-    submitBtn.disabled = false;
-  }
-}
-
-/* ---------- WhatsApp (with country code) ---------- */
-document.getElementById('whatsappBtn').addEventListener('click', () => {
-  const data = {
-    name: form.name.value.trim(),
-    phone: form.phone.value.trim(),
-    service: form.service.value,
-    date: form.date.value,
-    time: form.time.value,
-    notes: form.notes.value.trim()
-  };
-  if (!data.name || !data.phone) {
-    alert('Please fill at least Name and Phone first.');
-    return;
-  }
-  const text = `Hi, I'd like to book ${data.service} on ${data.date} at ${data.time}. Name: ${data.name}, Phone: ${countrySel.value} ${data.phone}`;
-  window.open(`https://wa.me/66982455446?text=${encodeURIComponent(text)}`, '_blank');
-});
-</script>
-
-<!-- 2.  Tiny helper -->
-<script>
-/* show “Sending…” while form is travelling */
-const form = document.getElementById('bookingForm');
-const btn  = document.getElementById('submitBtn');
-const txt  = document.getElementById('btnText');
-form.addEventListener('submit', () => {
-  txt.textContent = 'Sending…';
-  btn.disabled = true;
-});
-
-/* called when iframe comes back (redirect finished) */
-function bookingReturned() {
-  const params = new URLSearchParams(location.search);
-  const box = document.getElementById('formMsg');
-  if (params.get('sent') === '1') {
-    box.style.display = 'block';
-    box.style.background = '#f0fff4';
-    box.style.color = '#0b6b2f';
-    box.textContent = '✅  Booking sent successfully! We will contact you soon.';
-    txt.textContent = 'Book Now';          // reset button
-    btn.disabled = false;
-    form.reset();                          // clear fields
-  } else if (params.get('sent') === '0') {
-    box.style.display = 'block';
-    box.style.background = '#fff4f4';
-    box.style.color = '#6b1c1c';
-    box.textContent = '❌  Could not send booking. Please use WhatsApp or call us.';
-    txt.textContent = 'Book Now';
-    btn.disabled = false;
-  }
-}
 </script>
 
 <!-- invisible redirect target -->
